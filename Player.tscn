@@ -1,0 +1,93 @@
+[gd_scene load_steps=14 format=3 uid="uid://bchyjdelrnvqb"]
+
+[ext_resource type="Script" uid="uid://bbs3ng8jf33jk" path="res://PlayerScript.gd" id="1_76olv"]
+[ext_resource type="Texture2D" uid="uid://dbsnvvewum34r" path="res://Textures/AlliedSoldier1Gun.png" id="2_fm6tt"]
+[ext_resource type="Texture2D" uid="uid://bwa8456ntmit5" path="res://Textures/AlliedSoldier1.png" id="3_xtdhf"]
+[ext_resource type="Texture2D" uid="uid://c2bekf3n1pw8y" path="res://Textures/FireParticle.png" id="4_dkhlf"]
+[ext_resource type="Texture2D" uid="uid://2kae40j5ro0c" path="res://Textures/BloodParticle.png" id="5_4ptu2"]
+[ext_resource type="Script" uid="uid://dux5c8aus8uxo" path="res://HealthLabelScript.gd" id="5_mhbfy"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_2qm83"]
+radius = 6.0
+height = 28.0
+
+[sub_resource type="Curve" id="Curve_xxd4c"]
+_data = [Vector2(0, 0.516483), 0.0, 0.0, 0, 0, Vector2(1, 0), -5.38462, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_lvg7a"]
+curve = SubResource("Curve_xxd4c")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_3sc0p"]
+particle_flag_disable_z = true
+angle_max = 360.0
+initial_velocity_min = 10.0
+initial_velocity_max = 25.0
+gravity = Vector3(0, 0, 0)
+scale_curve = SubResource("CurveTexture_lvg7a")
+
+[sub_resource type="Curve" id="Curve_pxheh"]
+_data = [Vector2(0, 0.472527), 0.0, 3.24353, 0, 0, Vector2(1, 0), -1.83469, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_66pw8"]
+curve = SubResource("Curve_pxheh")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_vkscc"]
+particle_flag_disable_z = true
+direction = Vector3(0, 0, 0)
+spread = 180.0
+initial_velocity_min = 40.0
+initial_velocity_max = 70.0
+gravity = Vector3(0, 0, 0)
+scale_curve = SubResource("CurveTexture_66pw8")
+
+[node name="Player" type="CharacterBody2D" groups=["Player"]]
+z_index = 1
+script = ExtResource("1_76olv")
+
+[node name="PlayerGun" type="Sprite2D" parent="."]
+texture_filter = 1
+position = Vector2(-0.499998, -4)
+scale = Vector2(1.06, 0.84)
+texture = ExtResource("2_fm6tt")
+
+[node name="PlayerBody" type="Sprite2D" parent="."]
+texture_filter = 1
+texture = ExtResource("3_xtdhf")
+
+[node name="PlayerCollider" type="CollisionShape2D" parent="."]
+position = Vector2(0, -1)
+shape = SubResource("CapsuleShape2D_2qm83")
+
+[node name="GunParticles" type="GPUParticles2D" parent="."]
+texture_filter = 1
+position = Vector2(22, 0)
+emitting = false
+texture = ExtResource("4_dkhlf")
+lifetime = 0.2
+one_shot = true
+explosiveness = 0.95
+local_coords = true
+process_material = SubResource("ParticleProcessMaterial_3sc0p")
+
+[node name="PlayerCam" type="Camera2D" parent="."]
+zoom = Vector2(2, 2)
+
+[node name="CanvasLayer" type="CanvasLayer" parent="PlayerCam"]
+
+[node name="HealthLabel" type="Label" parent="PlayerCam/CanvasLayer"]
+offset_right = 40.0
+offset_bottom = 23.0
+theme_override_font_sizes/font_size = 32
+text = "Health:
+10/10"
+script = ExtResource("5_mhbfy")
+
+[node name="BloodParticles" type="GPUParticles2D" parent="."]
+emitting = false
+amount = 10
+texture = ExtResource("5_4ptu2")
+one_shot = true
+explosiveness = 0.95
+process_material = SubResource("ParticleProcessMaterial_vkscc")

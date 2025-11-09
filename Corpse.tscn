@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=3 uid="uid://dobrphjqtq8vy"]
+
+[ext_resource type="Texture2D" uid="uid://2kae40j5ro0c" path="res://Textures/BloodParticle.png" id="1_u6ncc"]
+
+[node name="Corpse" type="Sprite2D"]
+texture_filter = 1
+texture = ExtResource("1_u6ncc")

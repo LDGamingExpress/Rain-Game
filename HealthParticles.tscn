@@ -1,0 +1,29 @@
+[gd_scene load_steps=6 format=3 uid="uid://cvn3b1g70pt2x"]
+
+[ext_resource type="Texture2D" uid="uid://clqnlnsguqt54" path="res://Textures/HealthParticle.png" id="1_32775"]
+[ext_resource type="Script" path="res://HealthParticlesScript.gd" id="2_o2p1h"]
+
+[sub_resource type="Curve" id="Curve_qrr7p"]
+_data = [Vector2(0, 0.494505), 0.0, 6.07288, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_6liwt"]
+curve = SubResource("Curve_qrr7p")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_wux0d"]
+particle_flag_disable_z = true
+direction = Vector3(0, 0, 0)
+spread = 180.0
+initial_velocity_min = 40.0
+initial_velocity_max = 50.0
+gravity = Vector3(0, 98, 0)
+scale_curve = SubResource("CurveTexture_6liwt")
+
+[node name="HealthParticles" type="GPUParticles2D"]
+emitting = false
+process_material = SubResource("ParticleProcessMaterial_wux0d")
+texture = ExtResource("1_32775")
+lifetime = 0.8
+one_shot = true
+explosiveness = 0.95
+script = ExtResource("2_o2p1h")
