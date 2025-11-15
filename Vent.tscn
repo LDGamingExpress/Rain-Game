@@ -1,0 +1,63 @@
+[gd_scene load_steps=11 format=3 uid="uid://t5ngd8o06hsh"]
+
+[ext_resource type="Texture2D" uid="uid://bc1erfci8n3xb" path="res://Textures/RainGameTerrainTiles.png" id="1_okgid"]
+[ext_resource type="Texture2D" uid="uid://dgbwg6p6b1nsi" path="res://Textures/SmokeParticle.png" id="2_v5314"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lfyma"]
+atlas = ExtResource("1_okgid")
+region = Rect2(32, 96, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_lxhvx"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lfyma")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_6d7q8"]
+radius = 6.5
+
+[sub_resource type="Gradient" id="Gradient_fvrk2"]
+colors = PackedColorArray(0.23392546, 0.23392546, 0.23392543, 0.7176471, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_66v3w"]
+gradient = SubResource("Gradient_fvrk2")
+
+[sub_resource type="Curve" id="Curve_u5pau"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.106060594, 1), 0.9090254, 0.9090254, 0, 0, Vector2(0.6212121, 0.7865169), -1.3136435, -1.3136435, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 4
+
+[sub_resource type="CurveTexture" id="CurveTexture_xp01d"]
+curve = SubResource("Curve_u5pau")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_atexq"]
+particle_flag_disable_z = true
+angle_min = -720.0
+angle_max = 720.0
+direction = Vector3(-1, -1, 0)
+spread = 30.0
+initial_velocity_min = 4.0
+initial_velocity_max = 5.0
+gravity = Vector3(0, 0, 0)
+scale_curve = SubResource("CurveTexture_xp01d")
+color = Color(0.6745098, 0.6745098, 0.6745098, 0.67058825)
+color_ramp = SubResource("GradientTexture1D_66v3w")
+
+[node name="Vent" type="StaticBody2D"]
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_lxhvx")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-0.5, -0.5)
+shape = SubResource("CircleShape2D_6d7q8")
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="."]
+amount = 16
+texture = ExtResource("2_v5314")
+lifetime = 10.0
+process_material = SubResource("ParticleProcessMaterial_atexq")
