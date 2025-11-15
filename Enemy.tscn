@@ -1,14 +1,30 @@
-[gd_scene load_steps=14 format=3 uid="uid://ctxn0wvcvgmpp"]
+[gd_scene load_steps=16 format=3 uid="uid://ctxn0wvcvgmpp"]
 
-[ext_resource type="Script" path="res://EnemyScript.gd" id="1_7ysoc"]
-[ext_resource type="Texture2D" uid="uid://lxvd5ywx1kj3" path="res://Textures/EnemySoldier1Gun.png" id="2_e0bh1"]
-[ext_resource type="Texture2D" uid="uid://d0ovon1r35b4f" path="res://Textures/EnemySoldier1.png" id="3_puum5"]
+[ext_resource type="Script" uid="uid://dfx736yii4rib" path="res://EnemyScript.gd" id="1_7ysoc"]
+[ext_resource type="Texture2D" uid="uid://cbe2t5hldn12a" path="res://Textures/RainGameEntitiesTiles.png" id="2_e6d4v"]
 [ext_resource type="Texture2D" uid="uid://c2bekf3n1pw8y" path="res://Textures/FireParticle.png" id="4_dfun0"]
 [ext_resource type="Texture2D" uid="uid://2kae40j5ro0c" path="res://Textures/BloodParticle.png" id="5_iketv"]
 
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_2qm83"]
-radius = 6.0
+[sub_resource type="SphereMesh" id="SphereMesh_qp131"]
+radius = 14.0
 height = 28.0
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6do27"]
+atlas = ExtResource("2_e6d4v")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_rvmyp"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6do27")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_2nxwx"]
 
 [sub_resource type="Curve" id="Curve_xxd4c"]
 _data = [Vector2(0, 0.516483), 0.0, 0.0, 0, 0, Vector2(1, 0), -5.38462, 0.0, 0, 0]
@@ -48,30 +64,26 @@ scale_curve = SubResource("CurveTexture_kgq5n")
 z_index = 1
 script = ExtResource("1_7ysoc")
 
-[node name="EnemyGun" type="Sprite2D" parent="."]
-texture_filter = 1
-position = Vector2(-0.499998, -4)
-scale = Vector2(1.06, 0.84)
-texture = ExtResource("2_e0bh1")
+[node name="Shadow" type="MeshInstance2D" parent="."]
+self_modulate = Color(0.08855983, 0.08855996, 0.08855987, 0.05490196)
+mesh = SubResource("SphereMesh_qp131")
 
-[node name="EnemyBody" type="Sprite2D" parent="."]
-texture_filter = 1
-texture = ExtResource("3_puum5")
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_rvmyp")
 
 [node name="EnemyCollider" type="CollisionShape2D" parent="."]
-position = Vector2(0, -1)
-shape = SubResource("CapsuleShape2D_2qm83")
+shape = SubResource("CircleShape2D_2nxwx")
 
 [node name="GunParticles" type="GPUParticles2D" parent="."]
 texture_filter = 1
-position = Vector2(22, 0)
+position = Vector2(10, 0)
 emitting = false
-process_material = SubResource("ParticleProcessMaterial_3sc0p")
 texture = ExtResource("4_dfun0")
 lifetime = 0.2
 one_shot = true
 explosiveness = 0.95
 local_coords = true
+process_material = SubResource("ParticleProcessMaterial_3sc0p")
 
 [node name="DetectionArea" type="Area2D" parent="."]
 
@@ -79,12 +91,13 @@ local_coords = true
 shape = SubResource("CircleShape2D_1stxh")
 
 [node name="BloodParticles" type="GPUParticles2D" parent="."]
+self_modulate = Color(5.5101075, 5.1584415, 0, 0.8392157)
 emitting = false
 amount = 10
-process_material = SubResource("ParticleProcessMaterial_70qg1")
 texture = ExtResource("5_iketv")
 one_shot = true
 explosiveness = 0.95
+process_material = SubResource("ParticleProcessMaterial_70qg1")
 
 [connection signal="body_entered" from="DetectionArea" to="." method="_on_detection_area_body_entered"]
 [connection signal="body_exited" from="DetectionArea" to="." method="_on_detection_area_body_exited"]

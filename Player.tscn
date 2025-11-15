@@ -1,8 +1,9 @@
-[gd_scene load_steps=21 format=3 uid="uid://bchyjdelrnvqb"]
+[gd_scene load_steps=23 format=3 uid="uid://bchyjdelrnvqb"]
 
 [ext_resource type="Script" uid="uid://bbs3ng8jf33jk" path="res://PlayerScript.gd" id="1_76olv"]
 [ext_resource type="Texture2D" uid="uid://cbe2t5hldn12a" path="res://Textures/RainGameEntitiesTiles.png" id="2_cxr5p"]
 [ext_resource type="Texture2D" uid="uid://c2bekf3n1pw8y" path="res://Textures/FireParticle.png" id="4_dkhlf"]
+[ext_resource type="FontFile" uid="uid://dnq4w2x3b2pue" path="res://Textures/basicpixelfont.ttf" id="4_tdg3f"]
 [ext_resource type="Texture2D" uid="uid://2kae40j5ro0c" path="res://Textures/BloodParticle.png" id="5_4ptu2"]
 [ext_resource type="Script" uid="uid://dux5c8aus8uxo" path="res://HealthLabelScript.gd" id="5_mhbfy"]
 
@@ -48,6 +49,9 @@ initial_velocity_min = 10.0
 initial_velocity_max = 25.0
 gravity = Vector3(0, 0, 0)
 scale_curve = SubResource("CurveTexture_lvg7a")
+
+[sub_resource type="Theme" id="Theme_dtqjt"]
+default_font = ExtResource("4_tdg3f")
 
 [sub_resource type="Curve" id="Curve_pxheh"]
 _data = [Vector2(0, 0.472527), 0.0, 3.24353, 0, 0, Vector2(1, 0), -1.83469, 0.0, 0, 0]
@@ -202,6 +206,7 @@ zoom = Vector2(2, 2)
 [node name="HealthLabel" type="Label" parent="PlayerCam/CanvasLayer"]
 offset_right = 40.0
 offset_bottom = 23.0
+theme = SubResource("Theme_dtqjt")
 theme_override_font_sizes/font_size = 32
 text = "Health:
 10/10"
