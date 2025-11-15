@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bjhpowmt05f87"
-path="res://.godot/imported/Crosshair.png-b500cfa7e488d2b9ddc77c4db01c48a9.ctex"
+uid="uid://cbe2t5hldn12a"
+path="res://.godot/imported/RainGameEntitiesTiles.png-254852ae2350b9e36ba5a4c138ae7d70.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Textures/Crosshair.png"
-dest_files=["res://.godot/imported/Crosshair.png-b500cfa7e488d2b9ddc77c4db01c48a9.ctex"]
+source_file="res://Textures/RainGameEntitiesTiles.png"
+dest_files=["res://.godot/imported/RainGameEntitiesTiles.png-254852ae2350b9e36ba5a4c138ae7d70.ctex"]
 
 [params]
 

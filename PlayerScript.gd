@@ -14,29 +14,37 @@ func _physics_process(delta):
 	velocity = velocity * 0.8 # Applies friction
 	
 	# Camera zoom controls
-	if Input.is_action_just_released("ZoomIn"): # Checks if player is trying to zoom in
+	if Input.is_action_just_released("ZoomIn") and $PlayerCam.zoom.x < 6.0: # Checks if player is trying to zoom in
 		$PlayerCam.zoom += Vector2(0.05,0.05) # Zooms in the camera
-	if Input.is_action_just_released("ZoomOut"): # Checks if player is trying to zoom out
+	if Input.is_action_just_released("ZoomOut") and $PlayerCam.zoom.x > 0.5: # Checks if player is trying to zoom out
 		$PlayerCam.zoom -= Vector2(0.05,0.05) # Zooms out the camera
 	
 	# Stops player if velocity is too low from friction (prevents sliding)
 	if (abs(velocity.x) + abs(velocity.y)) < 15: # Checks if velocity is low
 		velocity = Vector2(0,0) # Changes velocity to 0
 	
+	var Moving = false
 	# Basic movement controls
 	if Input.is_action_pressed("Left"): # Checks if input for left is pressed
 		velocity.x = -SPEED
+		Moving = true
 		#velocity = SPEED * Vector2(cos(rotation - PI/2),sin(rotation - PI/2)) # Moves left relative of rotation
 	if Input.is_action_pressed("Right"): # Checks if input for right is pressed
 		velocity.x = SPEED
+		Moving = true
 		#velocity = SPEED * Vector2(cos(rotation + PI/2),sin(rotation + PI/2)) # Moves right relative of rotation
 	if Input.is_action_pressed("Forward"): # Checks if input for forward is pressed
 		velocity.y = -SPEED
+		Moving = true
 		#velocity = SPEED * Vector2(cos(rotation),sin(rotation)) # Moves forward relative of rotation
 	if Input.is_action_pressed("Backward"): # Checks if input for backward is pressed
 		velocity.y = SPEED
+		Moving = true
 		#velocity = -SPEED * Vector2(cos(rotation),sin(rotation)) # Moves backward relative of rotation
-	
+	if Moving:
+		$AnimationPlayer.play("Walking")
+	else:
+		$AnimationPlayer.play("Idle")
 	# Shooting controls
 	if Input.is_action_pressed("Shoot"): # Checks if input for shooting is pressed
 		if FireReady == 1: # Checks if gun is ready to fire

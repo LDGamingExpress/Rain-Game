@@ -1,15 +1,38 @@
-[gd_scene load_steps=14 format=3 uid="uid://bchyjdelrnvqb"]
+[gd_scene load_steps=21 format=3 uid="uid://bchyjdelrnvqb"]
 
 [ext_resource type="Script" uid="uid://bbs3ng8jf33jk" path="res://PlayerScript.gd" id="1_76olv"]
-[ext_resource type="Texture2D" uid="uid://dbsnvvewum34r" path="res://Textures/AlliedSoldier1Gun.png" id="2_fm6tt"]
-[ext_resource type="Texture2D" uid="uid://bwa8456ntmit5" path="res://Textures/AlliedSoldier1.png" id="3_xtdhf"]
+[ext_resource type="Texture2D" uid="uid://cbe2t5hldn12a" path="res://Textures/RainGameEntitiesTiles.png" id="2_cxr5p"]
 [ext_resource type="Texture2D" uid="uid://c2bekf3n1pw8y" path="res://Textures/FireParticle.png" id="4_dkhlf"]
 [ext_resource type="Texture2D" uid="uid://2kae40j5ro0c" path="res://Textures/BloodParticle.png" id="5_4ptu2"]
 [ext_resource type="Script" uid="uid://dux5c8aus8uxo" path="res://HealthLabelScript.gd" id="5_mhbfy"]
 
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_2qm83"]
-radius = 6.0
+[sub_resource type="SphereMesh" id="SphereMesh_cxr5p"]
+radius = 14.0
 height = 28.0
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tdg3f"]
+atlas = ExtResource("2_cxr5p")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dtqjt"]
+atlas = ExtResource("2_cxr5p")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_5ncpa"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tdg3f")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dtqjt")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_wi0c6"]
 
 [sub_resource type="Curve" id="Curve_xxd4c"]
 _data = [Vector2(0, 0.516483), 0.0, 0.0, 0, 0, Vector2(1, 0), -5.38462, 0.0, 0, 0]
@@ -42,30 +65,130 @@ initial_velocity_max = 70.0
 gravity = Vector3(0, 0, 0)
 scale_curve = SubResource("CurveTexture_66pw8")
 
+[sub_resource type="Animation" id="Animation_cxr5p"]
+resource_name = "Walking"
+length = 2.0
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("PlayerSprite:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5, 1, 1.5, 2),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [0.0, 0.17453292519943295, 0.0, -0.17453292519943295, 0.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("PlayerSprite:skew")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.5, 1, 1.5, 2),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [0.0, 0.13962634015954636, 0.0, -0.13962634015954636, 0.0]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("PlayerSprite:scale:x")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.5, 1, 1.5, 2),
+"transitions": PackedFloat32Array(1, 0.25, 1, 0.25, 1),
+"update": 1,
+"values": [1.0, 0.98, 1.0, 1.02, 1.0]
+}
+
+[sub_resource type="Animation" id="Animation_tdg3f"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("PlayerSprite:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("PlayerSprite:skew")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("PlayerSprite:scale:x")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [1.0]
+}
+
+[sub_resource type="Animation" id="Animation_dtqjt"]
+resource_name = "Idle"
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("PlayerSprite:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.23333333, 0.5, 0.75, 1),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [0.0, 0.017453292519943295, 0.0, -0.017453292519943295, 0.0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_5ncpa"]
+_data = {
+&"Idle": SubResource("Animation_dtqjt"),
+&"RESET": SubResource("Animation_tdg3f"),
+&"Walking": SubResource("Animation_cxr5p")
+}
+
 [node name="Player" type="CharacterBody2D" groups=["Player"]]
 z_index = 1
 script = ExtResource("1_76olv")
 
-[node name="PlayerGun" type="Sprite2D" parent="."]
-texture_filter = 1
-position = Vector2(-0.499998, -4)
-scale = Vector2(1.06, 0.84)
-texture = ExtResource("2_fm6tt")
+[node name="Shadow" type="MeshInstance2D" parent="."]
+self_modulate = Color(0.08855983, 0.08855996, 0.08855987, 0.05490196)
+mesh = SubResource("SphereMesh_cxr5p")
 
-[node name="PlayerBody" type="Sprite2D" parent="."]
-texture_filter = 1
-texture = ExtResource("3_xtdhf")
+[node name="PlayerSprite" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_5ncpa")
 
 [node name="PlayerCollider" type="CollisionShape2D" parent="."]
-position = Vector2(0, -1)
-shape = SubResource("CapsuleShape2D_2qm83")
+shape = SubResource("CircleShape2D_wi0c6")
 
 [node name="GunParticles" type="GPUParticles2D" parent="."]
+self_modulate = Color(0.70261204, 0.9778119, 0.61502695, 0.6509804)
 texture_filter = 1
-position = Vector2(22, 0)
+position = Vector2(6, 0)
 emitting = false
 texture = ExtResource("4_dkhlf")
-lifetime = 0.2
+lifetime = 0.25
 one_shot = true
 explosiveness = 0.95
 local_coords = true
@@ -85,9 +208,17 @@ text = "Health:
 script = ExtResource("5_mhbfy")
 
 [node name="BloodParticles" type="GPUParticles2D" parent="."]
+self_modulate = Color(0, 3.3529627, 0, 1)
 emitting = false
 amount = 10
 texture = ExtResource("5_4ptu2")
 one_shot = true
 explosiveness = 0.95
 process_material = SubResource("ParticleProcessMaterial_vkscc")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_5ncpa")
+}
+autoplay = "Idle"
+speed_scale = 1.5

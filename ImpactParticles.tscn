@@ -1,0 +1,39 @@
+[gd_scene load_steps=8 format=3 uid="uid://dbpdhtstbaom0"]
+
+[ext_resource type="Texture2D" uid="uid://dgbwg6p6b1nsi" path="res://Textures/SmokeParticle.png" id="1_v3wmg"]
+[ext_resource type="Script" uid="uid://bb6wmp0ip38i7" path="res://ImpactParticlesScript.gd" id="2_mutls"]
+
+[sub_resource type="Gradient" id="Gradient_mutls"]
+colors = PackedColorArray(1, 1, 1, 0.63529414, 0, 0, 0, 0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_bb8m1"]
+gradient = SubResource("Gradient_mutls")
+
+[sub_resource type="Curve" id="Curve_mfbhu"]
+_data = [Vector2(0, 0.50561804), 0.0, 5.2969513, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_7mk4g"]
+curve = SubResource("Curve_mfbhu")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_hhnu3"]
+particle_flag_disable_z = true
+angle_min = -720.0
+angle_max = 720.0
+spread = 180.0
+initial_velocity_min = 20.0
+initial_velocity_max = 35.0
+gravity = Vector3(0, 0, 0)
+scale_curve = SubResource("CurveTexture_7mk4g")
+color_ramp = SubResource("GradientTexture1D_bb8m1")
+
+[node name="ImpactParticles" type="GPUParticles2D"]
+emitting = false
+texture = ExtResource("1_v3wmg")
+lifetime = 0.75
+one_shot = true
+explosiveness = 0.95
+process_material = SubResource("ParticleProcessMaterial_hhnu3")
+script = ExtResource("2_mutls")
+
+[connection signal="finished" from="." to="." method="_on_finished"]

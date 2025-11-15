@@ -1,0 +1,1 @@
+extends DirectionalLight2D
