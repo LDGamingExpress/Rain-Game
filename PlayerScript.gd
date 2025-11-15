@@ -1,7 +1,7 @@
 extends CharacterBody2D
 @onready var BulletObj := preload("res://Bullet.tscn") # Bullet object to be spawned
 
-const SPEED = 100.0 # Speed of the player
+const SPEED = 70.0 # Speed of the player
 var Firerate = 0.2 # How long the player has to wait between shots
 var Damage = 1 # Damage of the player
 var Health = 10 # Health of the player
@@ -25,13 +25,17 @@ func _physics_process(delta):
 	
 	# Basic movement controls
 	if Input.is_action_pressed("Left"): # Checks if input for left is pressed
-		velocity = SPEED * Vector2(cos(rotation - PI/2),sin(rotation - PI/2)) # Moves left relative of rotation
+		velocity.x = -SPEED
+		#velocity = SPEED * Vector2(cos(rotation - PI/2),sin(rotation - PI/2)) # Moves left relative of rotation
 	if Input.is_action_pressed("Right"): # Checks if input for right is pressed
-		velocity = SPEED * Vector2(cos(rotation + PI/2),sin(rotation + PI/2)) # Moves right relative of rotation
+		velocity.x = SPEED
+		#velocity = SPEED * Vector2(cos(rotation + PI/2),sin(rotation + PI/2)) # Moves right relative of rotation
 	if Input.is_action_pressed("Forward"): # Checks if input for forward is pressed
-		velocity = SPEED * Vector2(cos(rotation),sin(rotation)) # Moves forward relative of rotation
+		velocity.y = -SPEED
+		#velocity = SPEED * Vector2(cos(rotation),sin(rotation)) # Moves forward relative of rotation
 	if Input.is_action_pressed("Backward"): # Checks if input for backward is pressed
-		velocity = -SPEED * Vector2(cos(rotation),sin(rotation)) # Moves backward relative of rotation
+		velocity.y = SPEED
+		#velocity = -SPEED * Vector2(cos(rotation),sin(rotation)) # Moves backward relative of rotation
 	
 	# Shooting controls
 	if Input.is_action_pressed("Shoot"): # Checks if input for shooting is pressed
