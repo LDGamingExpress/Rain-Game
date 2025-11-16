@@ -3,5 +3,6 @@
 [ext_resource type="Texture2D" uid="uid://2kae40j5ro0c" path="res://Textures/BloodParticle.png" id="1_u6ncc"]
 
 [node name="Corpse" type="Sprite2D"]
+self_modulate = Color(0.056291588, 0.056291603, 0.056291595, 1)
 texture_filter = 1
 texture = ExtResource("1_u6ncc")

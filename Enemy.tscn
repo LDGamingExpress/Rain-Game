@@ -62,7 +62,10 @@ scale_curve = SubResource("CurveTexture_kgq5n")
 
 [node name="Enemy" type="CharacterBody2D" groups=["Enemies"]]
 z_index = 1
+collision_layer = 3
+collision_mask = 3
 script = ExtResource("1_7ysoc")
+EnemyType = "Pawn"
 
 [node name="Shadow" type="MeshInstance2D" parent="."]
 self_modulate = Color(0.08855983, 0.08855996, 0.08855987, 0.05490196)

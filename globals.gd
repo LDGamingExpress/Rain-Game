@@ -1,7 +1,16 @@
 extends Node
-var Health = 10 # Player Health (Mainly for Display)
-var Damage = 1 # Player Damage
+var Health = 10.0 # Player Health (Mainly for Display)
+var Damage = 1.0 # Player Damage
 var Firerate = 0.2 # Player Firerate
+var PropLayer = null
+var PlayerTypes = {
+	"Plant": ["Seed","Take Over",Color(0.0, 3.353, 0.0),0,10],
+	"Pawn": ["Melee","Self Destruct",Color(5.51, 5.158, 0.0, 0.839),1,2],
+	"Bishop": ["Bolt","Electric Pulse",Color(5.51, 5.158, 0.0, 0.839),2,4],
+	"Knight": ["Laser","Dash",Color(5.51, 5.158, 0.0, 0.839),3,5],
+	"Rook": ["Plasma","Plasma Burst",Color(5.51, 5.158, 0.0, 0.839),4,12]
+}
+var CurrentPlayerType = "Plant"
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
