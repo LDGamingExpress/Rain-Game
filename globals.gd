@@ -4,11 +4,11 @@ var Damage = 1.0 # Player Damage
 var Firerate = 0.2 # Player Firerate
 var PropLayer = null
 var PlayerTypes = {
-	"Plant": ["Seed","Take Over",Color(0.0, 3.353, 0.0),0,10],
-	"Pawn": ["Melee","Self Destruct",Color(5.51, 5.158, 0.0, 0.839),1,2],
-	"Bishop": ["Bolt","Electric Pulse",Color(5.51, 5.158, 0.0, 0.839),2,4],
-	"Knight": ["Laser","Dash",Color(5.51, 5.158, 0.0, 0.839),3,5],
-	"Rook": ["Plasma","Plasma Burst",Color(5.51, 5.158, 0.0, 0.839),4,12]
+	"Plant": ["Seed","Take Over",Color(0.0, 3.353, 0.0),0,10,95.0],
+	"Pawn": ["Melee","Self Destruct",Color(5.51, 5.158, 0.0, 0.839),1,2,105.0],
+	"Bishop": ["Bolt","Electric Pulse",Color(5.51, 5.158, 0.0, 0.839),2,4,90.0],
+	"Knight": ["Laser","Dash",Color(5.51, 5.158, 0.0, 0.839),3,5,110.0],
+	"Rook": ["Plasma","Plasma Burst",Color(5.51, 5.158, 0.0, 0.839),4,12,85.0]
 }
 var CurrentPlayerType = "Plant"
 

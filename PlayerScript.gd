@@ -3,7 +3,7 @@ extends CharacterBody2D
 @onready var MeleeObj := preload("res://MeleeNode.tscn")
 @onready var ExplosionObj := preload("res://Explosion.tscn")
 
-const SPEED = 70.0 # Speed of the player
+var SPEED = 70.0 # Speed of the player
 var Firerate = 0.2 # How long the player has to wait between shots
 var Specialrate = 1.0
 var Damage = 1.0 # Damage of the player
@@ -23,6 +23,7 @@ func CheckTypeStats():
 	$BloodParticles.self_modulate = Globals.PlayerTypes[Globals.CurrentPlayerType][2]
 	$PlayerSprite.frame = Globals.PlayerTypes[Globals.CurrentPlayerType][3]
 	Health = Globals.PlayerTypes[Globals.CurrentPlayerType][4]
+	SPEED = Globals.PlayerTypes[Globals.CurrentPlayerType][5]
 	match ShootType:
 		"Seed":
 			Firerate = 0.2
@@ -65,10 +66,12 @@ func _physics_process(delta):
 	if Input.is_action_pressed("Forward"): # Checks if input for forward is pressed
 		velocity.y = -SPEED
 		Moving = true
+		velocity = velocity/sqrt(pow(velocity.x,2) + pow(velocity.y,2))*SPEED
 		#velocity = SPEED * Vector2(cos(rotation),sin(rotation)) # Moves forward relative of rotation
 	if Input.is_action_pressed("Backward"): # Checks if input for backward is pressed
 		velocity.y = SPEED
 		Moving = true
+		velocity = velocity/sqrt(pow(velocity.x,2) + pow(velocity.y,2))*SPEED
 		#velocity = -SPEED * Vector2(cos(rotation),sin(rotation)) # Moves backward relative of rotation
 	if Moving:
 		$AnimationPlayer.play("Walking")

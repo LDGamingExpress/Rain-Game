@@ -334,3 +334,45 @@ speed_scale = 0.25
 
 [node name="Enemy" parent="." instance=ExtResource("5_few4t")]
 position = Vector2(785, -140)
+
+[node name="Enemy2" parent="." instance=ExtResource("5_few4t")]
+position = Vector2(-844, -589)
+
+[node name="Enemy3" parent="." instance=ExtResource("5_few4t")]
+position = Vector2(-1453, 410)
+
+[node name="Enemy4" parent="." instance=ExtResource("5_few4t")]
+position = Vector2(-628, 560)
+
+[node name="Enemy5" parent="." instance=ExtResource("5_few4t")]
+position = Vector2(1561, 659)
+
+[node name="Enemy6" parent="." instance=ExtResource("5_few4t")]
+position = Vector2(1680, 501)
+
+[node name="Enemy7" parent="." instance=ExtResource("5_few4t")]
+position = Vector2(1823, 34)
+
+[node name="Enemy8" parent="." instance=ExtResource("5_few4t")]
+position = Vector2(2456, 241)
+
+[node name="Enemy9" parent="." instance=ExtResource("5_few4t")]
+position = Vector2(1856, -861)
+
+[node name="Enemy10" parent="." instance=ExtResource("5_few4t")]
+position = Vector2(33, -621)
+
+[node name="Enemy11" parent="." instance=ExtResource("5_few4t")]
+position = Vector2(297, -656)
+
+[node name="Enemy12" parent="." instance=ExtResource("5_few4t")]
+position = Vector2(1052, -611)
+
+[node name="Enemy13" parent="." instance=ExtResource("5_few4t")]
+position = Vector2(-563, -412)
+
+[node name="Enemy14" parent="." instance=ExtResource("5_few4t")]
+position = Vector2(-1596, -163)
+
+[node name="Enemy15" parent="." instance=ExtResource("5_few4t")]
+position = Vector2(-645, 23)

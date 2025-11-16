@@ -5,7 +5,7 @@ extends CharacterBody2D
 @onready var ExplosionObj := preload("res://Explosion.tscn")
 
 var HostilesFound = [] # Array to contain nodes of hostiles to attack within range
-const SPEED = 100.0 # Speed of the enemy
+var SPEED = 100.0 # Speed of the enemy
 var Firerate = 0.2 # How long the enemy has to wait between shots
 var Specialrate = 1.0
 var Damage = 1 # Damage of the player
@@ -35,6 +35,7 @@ func CheckTypeStats():
 	$BloodParticles.self_modulate = Globals.PlayerTypes[EnemyType][2]
 	$AnimatedSprite2D.frame = Globals.PlayerTypes[EnemyType][3] - 1
 	Health = Globals.PlayerTypes[EnemyType][4]
+	SPEED = Globals.PlayerTypes[EnemyType][5]
 	match ShootType:
 		"Seed":
 			Firerate = 0.2
@@ -157,6 +158,7 @@ func TakeDamage(DamageTaken): # Handles damage from hostiles
 	Health -= DamageTaken # Subtracts damage from health
 	$BloodParticles.restart() # Activates blood particles
 	if Health <= 0: # Checks if the health is 0 or less
+		$AnimatedSprite2D.visible = false
 		await get_tree().create_timer(0.4).timeout # Gives 1 second for particles to finish
 		var NewC = CorpseObj.instantiate() # Instantiates/Creates corpse object
 		NewC.position = position # Sets corpse to position
