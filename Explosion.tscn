@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://bgrs6wbp7wdd5"]
+[gd_scene load_steps=15 format=3 uid="uid://bgrs6wbp7wdd5"]
 
 [ext_resource type="Texture2D" uid="uid://c2bekf3n1pw8y" path="res://Textures/FireParticle.png" id="1_n4djn"]
 [ext_resource type="Script" uid="uid://di8u2jh0ocm78" path="res://ExplosionScript.gd" id="2_6sfjf"]
@@ -29,6 +29,9 @@ linear_accel_min = -12.700002
 linear_accel_max = -12.700002
 scale_curve = SubResource("CurveTexture_1dd7t")
 color_ramp = SubResource("GradientTexture1D_pdb5b")
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_n4djn"]
+radius = 50.0
 
 [sub_resource type="Gradient" id="Gradient_3m0pf"]
 colors = PackedColorArray(1, 1, 1, 1, 0.2231029, 0.2231029, 0.22310287, 0)
@@ -66,8 +69,11 @@ process_material = SubResource("ParticleProcessMaterial_2ml2m")
 script = ExtResource("2_6sfjf")
 
 [node name="Area2D" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("CircleShape2D_n4djn")
 
 [node name="GPUParticles2D" type="GPUParticles2D" parent="."]
 emitting = false
@@ -78,3 +84,4 @@ explosiveness = 0.95
 process_material = SubResource("ParticleProcessMaterial_eylxt")
 
 [connection signal="finished" from="." to="." method="_on_finished"]
+[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]

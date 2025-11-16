@@ -2,6 +2,7 @@ extends CharacterBody2D
 @onready var BulletObj := preload("res://Bullet.tscn") # Bullet object to be spawned
 @onready var CorpseObj := preload("res://Corpse.tscn") # Corpse object to be spawned
 @onready var MeleeObj := preload("res://MeleeNode.tscn")
+@onready var ExplosionObj := preload("res://Explosion.tscn")
 
 var HostilesFound = [] # Array to contain nodes of hostiles to attack within range
 const SPEED = 100.0 # Speed of the enemy
@@ -47,7 +48,7 @@ func CheckTypeStats():
 		"Take Over":
 			Specialrate = 1.0
 		"Self Destruct":
-			Specialrate = 1.0
+			Specialrate = 10.0
 			SpecialRange = 50
 
 func _ready():
@@ -82,6 +83,7 @@ func _physics_process(delta):
 				Movement = "Shooting" # Changes movement type to shooting
 				velocity.x = 0 # Halts x-axis movement
 				velocity.y = 0 # Halts z-axis movement
+				$AnimationPlayer.play("Idle")
 		if len(HostilesFound) == 0: # Checks if there are no hostiles in range
 			if Movement == "Random": # Checks if the enemy is already moving randomly
 				if (abs(position.x - Target.x) + abs(position.y - Target.y)) < 15 or sqrt(pow((position.x - LastPos.x),2) + pow((position.y - LastPos.y),2)) < 0.5:
@@ -96,8 +98,10 @@ func _physics_process(delta):
 		if Movement == "Random":
 			look_at(Vector2(Target.x,Target.y)) # Looks at target
 			velocity = SPEED * Vector2(cos(rotation),sin(rotation)) # Applies velocity forwards
+			$AnimationPlayer.play("Walking")
 		if Movement == "Targeted":
 			look_at(Vector2(Target.position.x,Target.position.y)) # Looks at target
+			$AnimationPlayer.play("Walking")
 			velocity = SPEED * Vector2(cos(rotation),sin(rotation)) # Applies velocity forwards
 		if Movement == "Shooting":
 			if !is_instance_valid(Target): # Checks if target no longer exists
@@ -106,6 +110,13 @@ func _physics_process(delta):
 				Target = position + Vector2(rng.randi_range(-10,10),rng.randi_range(-10,10)) - 20 * Vector2(cos(-rotation),sin(-rotation))
 				# Sets a new target position
 				Movement = "Random" # Sets movement type to random
+			elif sqrt(pow((position.x - Target.position.x),2) + pow((position.y - Target.position.y),2)) < SpecialRange and SpecialReady == 1:
+				if randf_range(0.0,50.0) > 30.0:
+					PrepNextSpecial()
+					look_at(Vector2(Target.position.x,Target.position.y)) # Looks at target
+					match SpecialType:
+						"Self Destruct":
+							SelfDestruct()
 			elif sqrt(pow((position.x - Target.position.x),2) + pow((position.y - Target.position.y),2)) > AttackRange:
 				Movement = "Targeted" # Changes movement type to targeted
 			elif FireReady == 1: # Checks if gun is ready to fire
@@ -137,6 +148,10 @@ func PrepNextFire(): # Prepares to fire after last shot
 	await get_tree().create_timer(Firerate).timeout # Waits out firerate
 	FireReady = 1 # Allows gun to fire again
 
+func PrepNextSpecial(): # Prepares to fire after last shot
+	SpecialReady = 0 # Prevents gun from firing
+	await get_tree().create_timer(Specialrate).timeout # Waits out firerate
+	SpecialReady = 1 # Allows gun to fire again
 
 func TakeDamage(DamageTaken): # Handles damage from hostiles
 	Health -= DamageTaken # Subtracts damage from health
@@ -161,4 +176,11 @@ func _on_detection_area_body_exited(body): # Activates when an object leaves the
 			HostilesFound.remove_at(HostilesFound.find(body,0)) # Removes hostile from hostile list
 
 func SelfDestruct():
-	pass
+	$SpecialAnimationPlayer.play("Self Destruct")
+	await get_tree().create_timer(1.0).timeout
+	var NewObj = ExplosionObj.instantiate()
+	NewObj.position = global_position
+	NewObj.Team = "Enemies"
+	NewObj.Damage = 8
+	get_parent().add_child(NewObj)
+	queue_free()
