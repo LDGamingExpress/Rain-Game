@@ -92,8 +92,19 @@ func _physics_process(delta):
 					Target = position + Vector2(rng.randi_range(-50,50),rng.randi_range(-50,50)) - 20 * Vector2(cos(-rotation),sin(-rotation))
 					# Sets a new target position
 			else:
-				Target = position + Vector2(rng.randi_range(-50,50),rng.randi_range(-50,50))
-				# Sets a new target position
+				var TPos = Vector2(rng.randi_range(-50,50),rng.randi_range(-50,50))
+				Target = position + TPos
+				#var GoodPos = false
+				#while GoodPos == false:
+				#	var TPos = Vector2(rng.randi_range(-50,50),rng.randi_range(-50,50))
+				#	$PathDetector.target_position = TPos
+				#	await get_tree().create_timer(0.001).timeout
+				#	if !$PathDetector.is_colliding():
+				#		GoodPos = true
+				#		Target = position + TPos
+				#		# Sets a new target position
+				#	else:
+				#		print("Oh noes! Bad target!")
 			Movement = "Random"
 			# Sets movement type to random if it was not already
 		if Movement == "Random":
