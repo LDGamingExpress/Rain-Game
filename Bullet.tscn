@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://qnp2jhbmibn3"]
+[gd_scene load_steps=9 format=3 uid="uid://qnp2jhbmibn3"]
 
 [ext_resource type="Script" uid="uid://cernwfs2s3ygm" path="res://BulletScript.gd" id="1_xc3pd"]
 [ext_resource type="Texture2D" uid="uid://cbe2t5hldn12a" path="res://Textures/RainGameEntitiesTiles.png" id="2_4s4u5"]
@@ -11,6 +11,14 @@ region = Rect2(0, 96, 32, 32)
 atlas = ExtResource("2_4s4u5")
 region = Rect2(32, 96, 32, 32)
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_4s4u5"]
+atlas = ExtResource("2_4s4u5")
+region = Rect2(64, 96, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7awvy"]
+atlas = ExtResource("2_4s4u5")
+region = Rect2(96, 96, 32, 32)
+
 [sub_resource type="SpriteFrames" id="SpriteFrames_7awvy"]
 animations = [{
 "frames": [{
@@ -19,6 +27,12 @@ animations = [{
 }, {
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_u8st5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4s4u5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7awvy")
 }],
 "loop": true,
 "name": &"default",

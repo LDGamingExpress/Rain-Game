@@ -1,4 +1,4 @@
-[gd_scene load_steps=28 format=3 uid="uid://bchyjdelrnvqb"]
+[gd_scene load_steps=31 format=3 uid="uid://bchyjdelrnvqb"]
 
 [ext_resource type="Script" uid="uid://bbs3ng8jf33jk" path="res://PlayerScript.gd" id="1_76olv"]
 [ext_resource type="Texture2D" uid="uid://cbe2t5hldn12a" path="res://Textures/RainGameEntitiesTiles.png" id="2_cxr5p"]
@@ -19,6 +19,18 @@ region = Rect2(0, 0, 32, 32)
 atlas = ExtResource("2_cxr5p")
 region = Rect2(32, 0, 32, 32)
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_5ncpa"]
+atlas = ExtResource("2_cxr5p")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wi0c6"]
+atlas = ExtResource("2_cxr5p")
+region = Rect2(96, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hp6x6"]
+atlas = ExtResource("2_cxr5p")
+region = Rect2(128, 0, 32, 32)
+
 [sub_resource type="SpriteFrames" id="SpriteFrames_5ncpa"]
 animations = [{
 "frames": [{
@@ -27,6 +39,15 @@ animations = [{
 }, {
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_dtqjt")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5ncpa")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wi0c6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hp6x6")
 }],
 "loop": true,
 "name": &"default",
@@ -136,6 +157,21 @@ tracks/3/keys = {
 "values": [Color(1, 1, 1, 1)]
 }
 
+[sub_resource type="Animation" id="Animation_5ncpa"]
+resource_name = "Self Destruct"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("PlayerSprite:self_modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1.495575, 0, 0, 1)]
+}
+
 [sub_resource type="Animation" id="Animation_cxr5p"]
 resource_name = "Walking"
 length = 2.0
@@ -177,21 +213,6 @@ tracks/2/keys = {
 "values": [1.0, 0.98, 1.0, 1.02, 1.0]
 }
 
-[sub_resource type="Animation" id="Animation_5ncpa"]
-resource_name = "Self Destruct"
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("PlayerSprite:self_modulate")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 1),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [Color(1, 1, 1, 1), Color(1.495575, 0, 0, 1)]
-}
-
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_5ncpa"]
 _data = {
 &"Idle": SubResource("Animation_dtqjt"),
@@ -202,21 +223,6 @@ _data = {
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_hp6x6"]
 radius = 50.0
-
-[sub_resource type="Animation" id="Animation_wi0c6"]
-resource_name = "Self Destruct"
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("PlayerSprite:self_modulate")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 1),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [Color(1, 1, 1, 1), Color(1.496, 0, 0, 1)]
-}
 
 [sub_resource type="Animation" id="Animation_hp6x6"]
 length = 0.001
@@ -231,6 +237,21 @@ tracks/0/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 0,
 "values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_wi0c6"]
+resource_name = "Self Destruct"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("PlayerSprite:self_modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1.496, 0, 0, 1)]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_3tkgg"]
