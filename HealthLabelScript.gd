@@ -7,5 +7,5 @@ func _ready():
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
+func _process(_delta):
 	text = ("Health:\n" + str(int(Globals.Health)) + "/" + str(Globals.PlayerTypes[Globals.CurrentPlayerType][4])) # Displays current health

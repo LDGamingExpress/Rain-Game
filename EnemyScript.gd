@@ -84,7 +84,7 @@ func _ready():
 	CheckTypeStats()
 
 
-func _physics_process(delta):
+func _physics_process(_delta):
 	if Health > 0: # Only lets the enemy move or shoot if alive
 		velocity = velocity * 0.8 # Applies friction
 		if (abs(velocity.x) + abs(velocity.y)) < 15: # Checks if velocity is low

@@ -15,7 +15,7 @@ func _ready():
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
+func _process(_delta):
 	if $RayCast2D.is_colliding():
 		_on_hit_area_body_entered($RayCast2D.get_collider())
 	move_and_slide() # Moves the bullet based on velocity
@@ -38,7 +38,8 @@ func _on_hit_area_body_entered(body): # Activated when the bullet hits an object
 			var NewE = Explosion.instantiate()
 			NewE.position = position
 			NewE.Team = Team
-			get_parent().add_child(NewE)
+			get_parent().call_deferred("add_child",NewE)
+			#get_parent().add_child(NewE)
 		var NewObj = ImpactP.instantiate()
 		NewObj.position = position
 		get_parent().add_child(NewObj)

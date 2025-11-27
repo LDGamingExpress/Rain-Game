@@ -1,0 +1,69 @@
+[gd_scene load_steps=11 format=3 uid="uid://4nyqg25jl2ds"]
+
+[ext_resource type="Script" uid="uid://t1vjri0w4fsp" path="res://DropShipScript.gd" id="1_ynw86"]
+[ext_resource type="Texture2D" uid="uid://cbe2t5hldn12a" path="res://Textures/RainGameEntitiesTiles.png" id="2_tdw60"]
+[ext_resource type="Texture2D" uid="uid://c2bekf3n1pw8y" path="res://Textures/FireParticle.png" id="3_pjvbh"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ignsm"]
+atlas = ExtResource("2_tdw60")
+region = Rect2(0, 32, 64, 64)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_u863g"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ignsm")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="Gradient" id="Gradient_y3oxf"]
+colors = PackedColorArray(1, 1, 1, 1, 0.556953, 0.556953, 0.556953, 0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_maafa"]
+gradient = SubResource("Gradient_y3oxf")
+
+[sub_resource type="Curve" id="Curve_n8f53"]
+_data = [Vector2(0, 0), 0.0, 7.521671, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_jusoy"]
+curve = SubResource("Curve_n8f53")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_jkt40"]
+particle_flag_disable_z = true
+angle_min = -720.0
+angle_max = 720.0
+spread = 180.0
+initial_velocity_min = 2.0
+initial_velocity_max = 5.0
+gravity = Vector3(0, 0, 0)
+scale_curve = SubResource("CurveTexture_jusoy")
+color_ramp = SubResource("GradientTexture1D_maafa")
+
+[node name="DropShip" type="CharacterBody2D"]
+z_index = 1
+script = ExtResource("1_ynw86")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_u863g")
+
+[node name="EngineParticles" type="GPUParticles2D" parent="."]
+position = Vector2(-33, -21)
+amount = 16
+texture = ExtResource("3_pjvbh")
+process_material = SubResource("ParticleProcessMaterial_jkt40")
+
+[node name="EngineParticles2" type="GPUParticles2D" parent="."]
+position = Vector2(-33, 0)
+amount = 16
+texture = ExtResource("3_pjvbh")
+process_material = SubResource("ParticleProcessMaterial_jkt40")
+
+[node name="EngineParticles3" type="GPUParticles2D" parent="."]
+position = Vector2(-33, 21)
+amount = 16
+texture = ExtResource("3_pjvbh")
+process_material = SubResource("ParticleProcessMaterial_jkt40")

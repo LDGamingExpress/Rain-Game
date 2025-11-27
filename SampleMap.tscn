@@ -1,4 +1,4 @@
-[gd_scene load_steps=32 format=4 uid="uid://ulx7dqu3h6un"]
+[gd_scene load_steps=33 format=4 uid="uid://ulx7dqu3h6un"]
 
 [ext_resource type="Script" uid="uid://wjmsta8kuqkr" path="res://MapScript.gd" id="1_si0pi"]
 [ext_resource type="Texture2D" uid="uid://bc1erfci8n3xb" path="res://Textures/RainGameTerrainTiles.png" id="2_fwoic"]
@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://t5ngd8o06hsh" path="res://Vent.tscn" id="3_lpy5r"]
 [ext_resource type="PackedScene" uid="uid://bchyjdelrnvqb" path="res://Player.tscn" id="5_bn4gl"]
 [ext_resource type="PackedScene" uid="uid://ctxn0wvcvgmpp" path="res://Enemy.tscn" id="5_few4t"]
+[ext_resource type="PackedScene" uid="uid://dwmvf03kimj50" path="res://Spawner.tscn" id="7_l36ww"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_husd3"]
 texture = ExtResource("2_fwoic")
@@ -379,3 +380,9 @@ position = Vector2(-1596, -163)
 [node name="Enemy15" parent="." instance=ExtResource("5_few4t")]
 position = Vector2(-645, 23)
 EnemyType = "Bishop"
+
+[node name="Spawner" parent="." instance=ExtResource("7_l36ww")]
+position = Vector2(645, -98)
+EnemyType = "Pawn"
+SpawnNumber = 3
+WaitTime = 50.0

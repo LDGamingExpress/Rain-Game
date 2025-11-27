@@ -1,9 +1,9 @@
-[gd_scene load_steps=40 format=3 uid="uid://bchyjdelrnvqb"]
+[gd_scene load_steps=39 format=3 uid="uid://bchyjdelrnvqb"]
 
 [ext_resource type="Script" uid="uid://bbs3ng8jf33jk" path="res://PlayerScript.gd" id="1_76olv"]
 [ext_resource type="Texture2D" uid="uid://cbe2t5hldn12a" path="res://Textures/RainGameEntitiesTiles.png" id="2_cxr5p"]
 [ext_resource type="Texture2D" uid="uid://c2bekf3n1pw8y" path="res://Textures/FireParticle.png" id="4_dkhlf"]
-[ext_resource type="FontFile" uid="uid://dnq4w2x3b2pue" path="res://Textures/basicpixelfont.ttf" id="4_tdg3f"]
+[ext_resource type="Theme" uid="uid://rygwy1ecjhrr" path="res://MainGameTheme.tres" id="4_dtqjt"]
 [ext_resource type="Texture2D" uid="uid://2kae40j5ro0c" path="res://Textures/BloodParticle.png" id="5_4ptu2"]
 [ext_resource type="Script" uid="uid://dux5c8aus8uxo" path="res://HealthLabelScript.gd" id="5_mhbfy"]
 [ext_resource type="Texture2D" uid="uid://dgbwg6p6b1nsi" path="res://Textures/SmokeParticle.png" id="7_dtqjt"]
@@ -71,9 +71,6 @@ initial_velocity_min = 10.0
 initial_velocity_max = 25.0
 gravity = Vector3(0, 0, 0)
 scale_curve = SubResource("CurveTexture_lvg7a")
-
-[sub_resource type="Theme" id="Theme_dtqjt"]
-default_font = ExtResource("4_tdg3f")
 
 [sub_resource type="Curve" id="Curve_pxheh"]
 _data = [Vector2(0, 0.472527), 0.0, 3.24353, 0, 0, Vector2(1, 0), -1.83469, 0.0, 0, 0]
@@ -413,6 +410,7 @@ local_coords = true
 process_material = SubResource("ParticleProcessMaterial_3sc0p")
 
 [node name="PlayerCam" type="Camera2D" parent="."]
+z_index = 2
 zoom = Vector2(2, 2)
 
 [node name="CanvasLayer" type="CanvasLayer" parent="PlayerCam"]
@@ -420,11 +418,36 @@ zoom = Vector2(2, 2)
 [node name="HealthLabel" type="Label" parent="PlayerCam/CanvasLayer"]
 offset_right = 40.0
 offset_bottom = 23.0
-theme = SubResource("Theme_dtqjt")
+theme = ExtResource("4_dtqjt")
 theme_override_font_sizes/font_size = 32
 text = "Health:
 10/10"
 script = ExtResource("5_mhbfy")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PlayerCam/CanvasLayer"]
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -70.0
+offset_top = -76.0
+offset_right = 72.0
+grow_horizontal = 2
+grow_vertical = 0
+theme = ExtResource("4_dtqjt")
+
+[node name="SpecialLabel" type="Label" parent="PlayerCam/CanvasLayer/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 32
+text = "Takeover"
+horizontal_alignment = 1
+
+[node name="SpecialReady" type="Label" parent="PlayerCam/CanvasLayer/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 32
+text = "Ready"
+horizontal_alignment = 1
 
 [node name="BloodParticles" type="GPUParticles2D" parent="."]
 self_modulate = Color(0, 3.3529627, 0, 1)
@@ -458,6 +481,9 @@ emitting = false
 texture = ExtResource("7_dtqjt")
 lifetime = 2.0
 process_material = SubResource("ParticleProcessMaterial_l6ohk")
+
+[node name="SpecialTimer" type="Timer" parent="."]
+one_shot = true
 
 [connection signal="body_entered" from="TakeOverArea" to="." method="_on_take_over_area_body_entered"]
 [connection signal="body_exited" from="TakeOverArea" to="." method="_on_take_over_area_body_exited"]

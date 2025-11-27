@@ -51,11 +51,18 @@ func CheckTypeStats():
 			Specialrate = 5.0
 		"Plasma Burst":
 			Specialrate = 10.0
+	$PlayerCam/CanvasLayer/VBoxContainer/SpecialLabel.text = SpecialType
 	$GunParticles.position = Globals.PlayerTypes[Globals.CurrentPlayerType][6][0]
 	if len(Globals.PlayerTypes[Globals.CurrentPlayerType][6]) > 1:
 		$GunParticles2.position = Globals.PlayerTypes[Globals.CurrentPlayerType][6][1]
 
-func _physics_process(delta):
+func _physics_process(_delta):
+	if SpecialReady == 1:
+		$PlayerCam/CanvasLayer/VBoxContainer/SpecialReady.text = "Ready"
+	else:
+		$PlayerCam/CanvasLayer/VBoxContainer/SpecialReady.text = str(ceil($SpecialTimer.time_left*100.0)/100.0)
+		
+	
 	Globals.Health = Health # Sets globally stored health to current health (global is mainly used for display)
 	look_at(get_global_mouse_position()) # Faces player towards cursor
 	
@@ -183,7 +190,10 @@ func PrepNextFire(): # Prepares to fire after last shot
 
 func PrepNextSpecial(): # Prepares to fire after last shot
 	SpecialReady = 0 # Prevents gun from firing
-	await get_tree().create_timer(Specialrate).timeout # Waits out firerate
+	$SpecialTimer.wait_time = Specialrate
+	$SpecialTimer.start()
+	await $SpecialTimer.timeout
+	#await get_tree().create_timer(Specialrate).timeout # Waits out firerate
 	SpecialReady = 1 # Allows gun to fire again
 
 func TakeDamage(DamageTaken): # Handles damage from hostiles
@@ -247,6 +257,7 @@ func Dash():
 	$EffectParticles.self_modulate = Color(1.543, 1.543, 1.53, 0.278)
 	$SpecialAnimationPlayer.play("DashNow")
 	velocity += 3000.0 * Vector2(cos(rotation),sin(rotation))
+	move_and_slide()
 
 func PlasmaBurst():
 	$EffectParticles.self_modulate = Color(2.253, 0.0, 1.966, 0.278)
