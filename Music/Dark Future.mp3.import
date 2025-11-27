@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://dsk3235h5lipr"
+path="res://.godot/imported/Dark Future.mp3-ce2888e9f7c62da18a905a7829ce58ac.mp3str"
+
+[deps]
+
+source_file="res://Music/Dark Future.mp3"
+dest_files=["res://.godot/imported/Dark Future.mp3-ce2888e9f7c62da18a905a7829ce58ac.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

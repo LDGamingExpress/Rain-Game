@@ -3,6 +3,8 @@ extends CharacterBody2D
 @onready var MeleeObj := preload("res://MeleeNode.tscn")
 @onready var ExplosionObj := preload("res://Explosion.tscn")
 
+var Music = [preload("res://Music/Cyber City Scramble.mp3"),preload("res://Music/Dark Future.mp3")]
+
 var SPEED = 70.0 # Speed of the player
 var Firerate = 0.2 # How long the player has to wait between shots
 var Specialrate = 1.0
@@ -16,6 +18,7 @@ var NearEnemies = []
 
 func _ready() -> void:
 	CheckTypeStats()
+	MusicPlayer()
 
 func CheckTypeStats():
 	ShootType = Globals.PlayerTypes[Globals.CurrentPlayerType][0]
@@ -271,3 +274,7 @@ func PlasmaBurst():
 		NewBul.Damage = Damage # Gives bullet enemy's damage
 		NewBul.Frame = 3
 		get_parent().add_child(NewBul) # Creates bullet as child of parent
+
+func MusicPlayer():
+	$MusicPlayer.stream = Music[randi_range(0,len(Music)-1)]
+	$MusicPlayer.play()

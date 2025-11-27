@@ -485,5 +485,8 @@ process_material = SubResource("ParticleProcessMaterial_l6ohk")
 [node name="SpecialTimer" type="Timer" parent="."]
 one_shot = true
 
+[node name="MusicPlayer" type="AudioStreamPlayer" parent="."]
+
 [connection signal="body_entered" from="TakeOverArea" to="." method="_on_take_over_area_body_entered"]
 [connection signal="body_exited" from="TakeOverArea" to="." method="_on_take_over_area_body_exited"]
+[connection signal="finished" from="MusicPlayer" to="." method="MusicPlayer"]
