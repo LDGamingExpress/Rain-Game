@@ -1,4 +1,4 @@
-[gd_scene load_steps=39 format=3 uid="uid://bchyjdelrnvqb"]
+[gd_scene load_steps=46 format=3 uid="uid://bchyjdelrnvqb"]
 
 [ext_resource type="Script" uid="uid://bbs3ng8jf33jk" path="res://PlayerScript.gd" id="1_76olv"]
 [ext_resource type="Texture2D" uid="uid://cbe2t5hldn12a" path="res://Textures/RainGameEntitiesTiles.png" id="2_cxr5p"]
@@ -222,6 +222,65 @@ _data = {
 [sub_resource type="CircleShape2D" id="CircleShape2D_hp6x6"]
 radius = 50.0
 
+[sub_resource type="Animation" id="Animation_oudfo"]
+resource_name = "DashNow"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("EffectParticles:emitting")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("PlayerSprite:skew")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+
+[sub_resource type="Animation" id="Animation_l6ohk"]
+resource_name = "DashReady"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("PlayerSprite:skew")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 2.5),
+"update": 0,
+"values": [0.0, -0.7853981633974484]
+}
+
+[sub_resource type="Animation" id="Animation_3tkgg"]
+resource_name = "Electric Pulse"
+length = 2.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("EffectParticles:emitting")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 2.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+
 [sub_resource type="Animation" id="Animation_hp6x6"]
 length = 0.001
 tracks/0/type = "value"
@@ -276,65 +335,6 @@ tracks/0/keys = {
 "values": [Color(1, 1, 1, 1), Color(1.496, 0, 0, 1)]
 }
 
-[sub_resource type="Animation" id="Animation_3tkgg"]
-resource_name = "Electric Pulse"
-length = 2.5
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("EffectParticles:emitting")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 2.5),
-"transitions": PackedFloat32Array(1, 1),
-"update": 1,
-"values": [true, false]
-}
-
-[sub_resource type="Animation" id="Animation_l6ohk"]
-resource_name = "DashReady"
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("PlayerSprite:skew")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 1),
-"transitions": PackedFloat32Array(1, 2.5),
-"update": 0,
-"values": [0.0, -0.7853981633974484]
-}
-
-[sub_resource type="Animation" id="Animation_oudfo"]
-resource_name = "DashNow"
-length = 0.5
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("EffectParticles:emitting")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.5),
-"transitions": PackedFloat32Array(1, 1),
-"update": 1,
-"values": [true, false]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("PlayerSprite:skew")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [0.0]
-}
-
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_3tkgg"]
 _data = {
 &"DashNow": SubResource("Animation_oudfo"),
@@ -367,6 +367,41 @@ initial_velocity_max = 18.0
 gravity = Vector3(0, 0, 0)
 scale_curve = SubResource("CurveTexture_3tkgg")
 color_ramp = SubResource("GradientTexture1D_wi0c6")
+
+[sub_resource type="Gradient" id="Gradient_dtqjt"]
+colors = PackedColorArray(0, 0.7176471, 1, 0, 0, 0.53333336, 1, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_5ncpa"]
+gradient = SubResource("Gradient_dtqjt")
+width = 10
+
+[sub_resource type="Gradient" id="Gradient_wi0c6"]
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_hp6x6"]
+gradient = SubResource("Gradient_wi0c6")
+
+[sub_resource type="Curve" id="Curve_3tkgg"]
+_data = [Vector2(0, 0), 0.0, 6.5258446, 0, 0, Vector2(0.3181818, 1), 0.81905085, 0.81905085, 0, 0, Vector2(0.70454544, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 4
+
+[sub_resource type="CurveTexture" id="CurveTexture_l6ohk"]
+curve = SubResource("Curve_3tkgg")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_oudfo"]
+particle_flag_disable_z = true
+emission_shape_offset = Vector3(0, -50, 0)
+emission_shape_scale = Vector3(10, 10, 10)
+emission_shape = 1
+emission_sphere_radius = 128.0
+angle_min = 89.000015
+angle_max = 91.000015
+direction = Vector3(0, 1, 0)
+initial_velocity_min = 5.0
+initial_velocity_max = 10.0
+gravity = Vector3(0, 98, 0)
+scale_curve = SubResource("CurveTexture_l6ohk")
+color_ramp = SubResource("GradientTexture1D_hp6x6")
 
 [node name="Player" type="CharacterBody2D" groups=["Player"]]
 z_index = 1
@@ -414,6 +449,7 @@ z_index = 2
 zoom = Vector2(2, 2)
 
 [node name="CanvasLayer" type="CanvasLayer" parent="PlayerCam"]
+process_mode = 3
 
 [node name="HealthLabel" type="Label" parent="PlayerCam/CanvasLayer"]
 offset_right = 40.0
@@ -448,6 +484,75 @@ layout_mode = 2
 theme_override_font_sizes/font_size = 32
 text = "Ready"
 horizontal_alignment = 1
+
+[node name="GameOver" type="VBoxContainer" parent="PlayerCam/CanvasLayer"]
+visible = false
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("4_dtqjt")
+
+[node name="Label" type="Label" parent="PlayerCam/CanvasLayer/GameOver"]
+layout_mode = 2
+text = "Game Over"
+
+[node name="Restart" type="Button" parent="PlayerCam/CanvasLayer/GameOver"]
+layout_mode = 2
+mouse_default_cursor_shape = 2
+text = "Restart"
+
+[node name="MainMenu" type="Button" parent="PlayerCam/CanvasLayer/GameOver"]
+layout_mode = 2
+mouse_default_cursor_shape = 2
+text = "Main Menu"
+
+[node name="Quit" type="Button" parent="PlayerCam/CanvasLayer/GameOver"]
+layout_mode = 2
+mouse_default_cursor_shape = 2
+text = "Quit"
+
+[node name="Win" type="VBoxContainer" parent="PlayerCam/CanvasLayer"]
+visible = false
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -27.0
+offset_top = -29.5
+offset_right = 27.0
+offset_bottom = 29.5
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("4_dtqjt")
+
+[node name="Label" type="Label" parent="PlayerCam/CanvasLayer/Win"]
+layout_mode = 2
+text = "Victory"
+horizontal_alignment = 1
+
+[node name="NextMap" type="Button" parent="PlayerCam/CanvasLayer/Win"]
+layout_mode = 2
+mouse_default_cursor_shape = 2
+text = "Next Map"
+
+[node name="MainMenu" type="Button" parent="PlayerCam/CanvasLayer/Win"]
+layout_mode = 2
+mouse_default_cursor_shape = 2
+text = "Main Menu"
+
+[node name="Quit" type="Button" parent="PlayerCam/CanvasLayer/Win"]
+layout_mode = 2
+mouse_default_cursor_shape = 2
+text = "Quit"
 
 [node name="BloodParticles" type="GPUParticles2D" parent="."]
 self_modulate = Color(0, 3.3529627, 0, 1)
@@ -487,6 +592,20 @@ one_shot = true
 
 [node name="MusicPlayer" type="AudioStreamPlayer" parent="."]
 
+[node name="RainParticles" type="GPUParticles2D" parent="."]
+emitting = false
+amount = 500
+texture = SubResource("GradientTexture1D_5ncpa")
+lifetime = 4.0
+randomness = 0.62
+process_material = SubResource("ParticleProcessMaterial_oudfo")
+
+[connection signal="pressed" from="PlayerCam/CanvasLayer/GameOver/Restart" to="." method="_on_restart_pressed"]
+[connection signal="pressed" from="PlayerCam/CanvasLayer/GameOver/MainMenu" to="." method="_on_main_menu_pressed"]
+[connection signal="pressed" from="PlayerCam/CanvasLayer/GameOver/Quit" to="." method="_on_quit_pressed"]
+[connection signal="pressed" from="PlayerCam/CanvasLayer/Win/NextMap" to="." method="_on_next_map_pressed"]
+[connection signal="pressed" from="PlayerCam/CanvasLayer/Win/MainMenu" to="." method="_on_main_menu_pressed"]
+[connection signal="pressed" from="PlayerCam/CanvasLayer/Win/Quit" to="." method="_on_quit_pressed"]
 [connection signal="body_entered" from="TakeOverArea" to="." method="_on_take_over_area_body_entered"]
 [connection signal="body_exited" from="TakeOverArea" to="." method="_on_take_over_area_body_exited"]
 [connection signal="finished" from="MusicPlayer" to="." method="MusicPlayer"]

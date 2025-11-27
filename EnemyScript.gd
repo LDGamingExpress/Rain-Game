@@ -85,6 +85,13 @@ func _ready():
 
 
 func _physics_process(_delta):
+	if Globals.MapWon:
+		var NewObj = ExplosionObj.instantiate()
+		NewObj.position = global_position
+		NewObj.Team = "Enemies"
+		NewObj.Damage = 8
+		get_parent().add_child(NewObj)
+		queue_free()
 	if Health > 0: # Only lets the enemy move or shoot if alive
 		velocity = velocity * 0.8 # Applies friction
 		if (abs(velocity.x) + abs(velocity.y)) < 15: # Checks if velocity is low

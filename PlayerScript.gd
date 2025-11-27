@@ -16,6 +16,8 @@ var ShootType = "Seed"
 var SpecialType = "Take Over"
 var NearEnemies = []
 
+var RainMachine = null
+
 func _ready() -> void:
 	CheckTypeStats()
 	MusicPlayer()
@@ -183,7 +185,19 @@ func _physics_process(_delta):
 				"Plasma Burst":
 					PlasmaBurst()
 					PrepNextSpecial()
-	
+	if Input.is_action_just_pressed("Interact"):
+		if RainMachine != null:
+			if RainMachine.get_child(0).frame == 0:
+				RainMachine.get_child(0).frame = 1
+				RainMachine.get_child(3).get_child(0).visible = false
+				var NewObj = ExplosionObj.instantiate()
+				NewObj.position = RainMachine.global_position
+				NewObj.Team = "Player"
+				get_parent().add_child(NewObj)
+				$RainParticles.emitting = true
+				Globals.MapWon = true
+				$PlayerCam/CanvasLayer/Win.visible = true
+				#print("Win")
 	move_and_slide() # Moves player based on velocity
 
 func PrepNextFire(): # Prepares to fire after last shot
@@ -208,7 +222,9 @@ func TakeDamage(DamageTaken): # Handles damage from hostiles
 			CheckTypeStats()
 		else:
 			await get_tree().create_timer(1).timeout # Gives 1 second for particles to finish
-			print("GameOver") # Prints gameover to indicate player should be dead
+			get_tree().paused = true
+			$PlayerCam/CanvasLayer/GameOver.visible = true
+			#print("GameOver") # Prints gameover to indicate player should be dead
 			# Game over is not currently implemented but can be done by either creating a menu to only show upon death
 			# Or send the player to a separate game over scene
 
@@ -235,11 +251,17 @@ func SelfDestruct():
 func _on_take_over_area_body_entered(body: Node2D) -> void:
 	if body.is_in_group("Enemies"):
 		NearEnemies.append(body)
+	if body.is_in_group("RainMachine"):
+		RainMachine = body
+		body.get_child(3).visible = true
 
 
 func _on_take_over_area_body_exited(body: Node2D) -> void:
 	if body.is_in_group("Enemies"):
 		NearEnemies.erase(body)
+	if body.is_in_group("RainMachine"):
+		RainMachine = null
+		body.get_child(3).visible = false
 
 func ElectricPulse():
 	$EffectParticles.self_modulate = Color(4.455, 4.455, 0.0, 0.278)
@@ -278,3 +300,19 @@ func PlasmaBurst():
 func MusicPlayer():
 	$MusicPlayer.stream = Music[randi_range(0,len(Music)-1)]
 	$MusicPlayer.play()
+
+
+func _on_restart_pressed() -> void:
+	get_tree().reload_current_scene()
+
+
+func _on_main_menu_pressed() -> void:
+	pass # Replace with function body.
+
+
+func _on_quit_pressed() -> void:
+	get_tree().quit()
+
+
+func _on_next_map_pressed() -> void:
+	pass # Replace with function body.

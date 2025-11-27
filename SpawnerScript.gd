@@ -6,8 +6,9 @@ var DropShipObj = preload("res://DropShip.tscn")
 
 func _ready() -> void:
 	await get_tree().create_timer(WaitTime).timeout
-	CreateDropShip()
-	_ready()
+	if !Globals.MapWon:
+		CreateDropShip()
+		_ready()
 
 func CreateDropShip():
 	var NewObj = DropShipObj.instantiate()
