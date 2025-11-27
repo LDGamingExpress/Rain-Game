@@ -1,4 +1,4 @@
-[gd_scene load_steps=31 format=3 uid="uid://bchyjdelrnvqb"]
+[gd_scene load_steps=37 format=3 uid="uid://bchyjdelrnvqb"]
 
 [ext_resource type="Script" uid="uid://bbs3ng8jf33jk" path="res://PlayerScript.gd" id="1_76olv"]
 [ext_resource type="Texture2D" uid="uid://cbe2t5hldn12a" path="res://Textures/RainGameEntitiesTiles.png" id="2_cxr5p"]
@@ -6,6 +6,7 @@
 [ext_resource type="FontFile" uid="uid://dnq4w2x3b2pue" path="res://Textures/basicpixelfont.ttf" id="4_tdg3f"]
 [ext_resource type="Texture2D" uid="uid://2kae40j5ro0c" path="res://Textures/BloodParticle.png" id="5_4ptu2"]
 [ext_resource type="Script" uid="uid://dux5c8aus8uxo" path="res://HealthLabelScript.gd" id="5_mhbfy"]
+[ext_resource type="Texture2D" uid="uid://dgbwg6p6b1nsi" path="res://Textures/SmokeParticle.png" id="7_dtqjt"]
 
 [sub_resource type="SphereMesh" id="SphereMesh_cxr5p"]
 radius = 14.0
@@ -260,6 +261,30 @@ _data = {
 &"Self Destruct": SubResource("Animation_wi0c6")
 }
 
+[sub_resource type="Gradient" id="Gradient_5ncpa"]
+colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_wi0c6"]
+gradient = SubResource("Gradient_5ncpa")
+
+[sub_resource type="Curve" id="Curve_hp6x6"]
+_data = [Vector2(0.030303031, 0), 0.0, 6.717779, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_3tkgg"]
+curve = SubResource("Curve_hp6x6")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_l6ohk"]
+particle_flag_disable_z = true
+angle_min = -720.0
+angle_max = 720.0
+spread = 180.0
+initial_velocity_min = 8.0
+initial_velocity_max = 18.0
+gravity = Vector3(0, 0, 0)
+scale_curve = SubResource("CurveTexture_3tkgg")
+color_ramp = SubResource("GradientTexture1D_wi0c6")
+
 [node name="Player" type="CharacterBody2D" groups=["Player"]]
 z_index = 1
 collision_layer = 3
@@ -278,6 +303,18 @@ frame = 1
 shape = SubResource("CircleShape2D_wi0c6")
 
 [node name="GunParticles" type="GPUParticles2D" parent="."]
+self_modulate = Color(0.7019608, 0.9764706, 0.6156863, 0.6509804)
+texture_filter = 1
+position = Vector2(6, 0)
+emitting = false
+texture = ExtResource("4_dkhlf")
+lifetime = 0.25
+one_shot = true
+explosiveness = 0.95
+local_coords = true
+process_material = SubResource("ParticleProcessMaterial_3sc0p")
+
+[node name="GunParticles2" type="GPUParticles2D" parent="."]
 self_modulate = Color(0.7019608, 0.9764706, 0.6156863, 0.6509804)
 texture_filter = 1
 position = Vector2(6, 0)
@@ -328,6 +365,13 @@ shape = SubResource("CircleShape2D_hp6x6")
 libraries = {
 &"": SubResource("AnimationLibrary_3tkgg")
 }
+
+[node name="EffectParticles" type="GPUParticles2D" parent="."]
+self_modulate = Color(4.45484, 4.45484, 0, 0.2784314)
+emitting = false
+texture = ExtResource("7_dtqjt")
+lifetime = 2.0
+process_material = SubResource("ParticleProcessMaterial_l6ohk")
 
 [connection signal="body_entered" from="TakeOverArea" to="." method="_on_take_over_area_body_entered"]
 [connection signal="body_exited" from="TakeOverArea" to="." method="_on_take_over_area_body_exited"]

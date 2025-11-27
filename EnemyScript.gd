@@ -45,12 +45,36 @@ func CheckTypeStats():
 			Firerate = 0.5
 			Damage = 0.5
 			AttackRange = 30
+		"Bolt":
+			Firerate = 0.75
+			Damage = 1.0
+			AttackRange = 350
+		"Laser":
+			Firerate = 0.5
+			Damage = 0.5
+			AttackRange = 400
+		"Plasma":
+			Firerate = 2.5
+			Damage = 5.0
+			AttackRange = 200
 	match SpecialType:
 		"Take Over":
 			Specialrate = 1.0
 		"Self Destruct":
 			Specialrate = 10.0
 			SpecialRange = 50
+		"Electric Pulse":
+			Specialrate = 15.0
+			SpecialRange = 120
+		"Dash":
+			Specialrate = 5.0
+			SpecialRange = 350
+		"Plasma Burst":
+			Specialrate = 10.0
+			SpecialRange = 280
+	$GunParticles.position = Globals.PlayerTypes[EnemyType][6][0]
+	if len(Globals.PlayerTypes[EnemyType][6]) > 1:
+		$GunParticles2.position = Globals.PlayerTypes[EnemyType][6][1]
 
 func _ready():
 	Health = 3 # Starting health, can be modified or randomized
@@ -129,6 +153,12 @@ func _physics_process(delta):
 					match SpecialType:
 						"Self Destruct":
 							SelfDestruct()
+						"Electric Pulse":
+							ElectricPulse()
+						"Dash":
+							Dash()
+						"Plasma Burst":
+							PlasmaBurst()
 			elif sqrt(pow((position.x - Target.position.x),2) + pow((position.y - Target.position.y),2)) > AttackRange:
 				Movement = "Targeted" # Changes movement type to targeted
 			elif FireReady == 1: # Checks if gun is ready to fire
@@ -142,6 +172,7 @@ func _physics_process(delta):
 						NewBul.rotation = rotation # Rotates bullet to match rotation
 						NewBul.Team = "Enemies" # Sets team to match group
 						NewBul.Damage = Damage # Gives bullet enemy's damage
+						NewBul.Frame = 0
 						get_parent().add_child(NewBul) # Creates bullet as child of parent
 					"Melee":
 						var NewObj = MeleeObj.instantiate()
@@ -150,6 +181,45 @@ func _physics_process(delta):
 						NewObj.Damage = Damage
 						add_child(NewObj)
 						PrepNextFire() # Gun is prepared to fire again
+					"Bolt":
+						$GunParticles.restart() # Particles are activated
+						PrepNextFire() # Gun is prepared to fire again
+						var NewBul = BulletObj.instantiate() # Instantiates/Creates bullet object
+						NewBul.position = $GunParticles.global_position # Sets bullet to gun position
+						NewBul.rotation = rotation # Rotates bullet to match rotation
+						NewBul.Team = "Enemies" # Sets team to match group
+						NewBul.Damage = Damage # Gives bullet enemy's damage
+						NewBul.Frame = 1
+						get_parent().add_child(NewBul) # Creates bullet as child of parent
+					"Laser":
+						$GunParticles.restart() # Particles are activated
+						PrepNextFire() # Gun is prepared to fire again
+						var NewBul = BulletObj.instantiate() # Instantiates/Creates bullet object
+						NewBul.position = $GunParticles.global_position # Sets bullet to gun position
+						NewBul.rotation = rotation # Rotates bullet to match rotation
+						NewBul.Team = "Enemies" # Sets team to match group
+						NewBul.Damage = Damage # Gives bullet enemy's damage
+						NewBul.Frame = 2
+						get_parent().add_child(NewBul) # Creates bullet as child of parent
+						$GunParticles2.restart() # Particles are activated
+						PrepNextFire() # Gun is prepared to fire again
+						var NewBul2 = BulletObj.instantiate() # Instantiates/Creates bullet object
+						NewBul2.position = $GunParticles2.global_position # Sets bullet to gun position
+						NewBul2.rotation = rotation # Rotates bullet to match rotation
+						NewBul2.Team = "Enemies" # Sets team to match group
+						NewBul2.Damage = Damage # Gives bullet enemy's damage
+						NewBul2.Frame = 2
+						get_parent().add_child(NewBul2) # Creates bullet as child of parent
+					"Plasma":
+						$GunParticles.restart() # Particles are activated
+						PrepNextFire() # Gun is prepared to fire again
+						var NewBul = BulletObj.instantiate() # Instantiates/Creates bullet object
+						NewBul.position = $GunParticles.global_position # Sets bullet to gun position
+						NewBul.rotation = rotation # Rotates bullet to match rotation
+						NewBul.Team = "Enemies" # Sets team to match group
+						NewBul.Damage = Damage # Gives bullet enemy's damage
+						NewBul.Frame = 3
+						get_parent().add_child(NewBul) # Creates bullet as child of parent
 			else:
 				look_at(Vector2(Target.position.x,Target.position.y)) # Looks at target
 		LastPos = position
@@ -197,3 +267,36 @@ func SelfDestruct():
 	NewObj.Damage = 8
 	get_parent().add_child(NewObj)
 	queue_free()
+
+func ElectricPulse():
+	$EffectParticles.self_modulate = Color(4.455, 4.455, 0.0, 0.278)
+	$SpecialAnimationPlayer.play("Electric Pulse")
+	await get_tree().create_timer(2.5).timeout
+	for i in range(0,15):
+		var NewBul = BulletObj.instantiate() # Instantiates/Creates bullet object
+		NewBul.position = global_position # Sets bullet to gun position
+		NewBul.rotation = i * 2*PI/16 # Rotates bullet to match rotation
+		NewBul.Team = "Enemies" # Sets team to match group
+		NewBul.Damage = Damage # Gives bullet enemy's damage
+		NewBul.Frame = 1
+		get_parent().add_child(NewBul) # Creates bullet as child of parent
+
+func Dash():
+	$SpecialAnimationPlayer.play("DashReady")
+	await get_tree().create_timer(1.0).timeout
+	$EffectParticles.self_modulate = Color(1.543, 1.543, 1.53, 0.278)
+	$SpecialAnimationPlayer.play("DashNow")
+	velocity += 3000.0 * Vector2(cos(rotation),sin(rotation))
+
+func PlasmaBurst():
+	$EffectParticles.self_modulate = Color(2.253, 0.0, 1.966, 0.278)
+	$SpecialAnimationPlayer.play("Electric Pulse")
+	await get_tree().create_timer(2.5).timeout
+	for i in range(0,25):
+		var NewBul = BulletObj.instantiate() # Instantiates/Creates bullet object
+		NewBul.position = global_position # Sets bullet to gun position
+		NewBul.rotation = i * 2*PI/26 # Rotates bullet to match rotation
+		NewBul.Team = "Enemies" # Sets team to match group
+		NewBul.Damage = Damage # Gives bullet enemy's damage
+		NewBul.Frame = 3
+		get_parent().add_child(NewBul) # Creates bullet as child of parent

@@ -31,11 +31,23 @@ func CheckTypeStats():
 		"Melee":
 			Firerate = 0.5
 			Damage = 0.5
+		"Bolt":
+			Firerate = 0.75
+			Damage = 1.0
+		"Laser":
+			Firerate = 0.5
+			Damage = 0.5
+		"Plasma":
+			Firerate = 2.5
+			Damage = 2.0
 	match SpecialType:
 		"Take Over":
 			Specialrate = 1.0
 		"Self Destruct":
 			Specialrate = 10.0
+	$GunParticles.position = Globals.PlayerTypes[Globals.CurrentPlayerType][6][0]
+	if len(Globals.PlayerTypes[Globals.CurrentPlayerType][6]) > 1:
+		$GunParticles2.position = Globals.PlayerTypes[Globals.CurrentPlayerType][6][1]
 
 func _physics_process(delta):
 	Globals.Health = Health # Sets globally stored health to current health (global is mainly used for display)

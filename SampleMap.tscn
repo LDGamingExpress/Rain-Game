@@ -334,6 +334,7 @@ speed_scale = 0.25
 
 [node name="Enemy" parent="." instance=ExtResource("5_few4t")]
 position = Vector2(785, -140)
+EnemyType = "Knight"
 
 [node name="Enemy2" parent="." instance=ExtResource("5_few4t")]
 position = Vector2(-844, -589)
@@ -360,7 +361,8 @@ position = Vector2(2456, 241)
 position = Vector2(1856, -861)
 
 [node name="Enemy10" parent="." instance=ExtResource("5_few4t")]
-position = Vector2(33, -621)
+position = Vector2(-143, -574)
+EnemyType = "Rook"
 
 [node name="Enemy11" parent="." instance=ExtResource("5_few4t")]
 position = Vector2(297, -656)
@@ -376,3 +378,4 @@ position = Vector2(-1596, -163)
 
 [node name="Enemy15" parent="." instance=ExtResource("5_few4t")]
 position = Vector2(-645, 23)
+EnemyType = "Bishop"

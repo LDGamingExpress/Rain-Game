@@ -1,9 +1,10 @@
-[gd_scene load_steps=26 format=3 uid="uid://ctxn0wvcvgmpp"]
+[gd_scene load_steps=35 format=3 uid="uid://ctxn0wvcvgmpp"]
 
 [ext_resource type="Script" uid="uid://dfx736yii4rib" path="res://EnemyScript.gd" id="1_7ysoc"]
 [ext_resource type="Texture2D" uid="uid://cbe2t5hldn12a" path="res://Textures/RainGameEntitiesTiles.png" id="2_e6d4v"]
 [ext_resource type="Texture2D" uid="uid://c2bekf3n1pw8y" path="res://Textures/FireParticle.png" id="4_dfun0"]
 [ext_resource type="Texture2D" uid="uid://2kae40j5ro0c" path="res://Textures/BloodParticle.png" id="5_iketv"]
+[ext_resource type="Texture2D" uid="uid://dgbwg6p6b1nsi" path="res://Textures/SmokeParticle.png" id="5_qp131"]
 
 [sub_resource type="SphereMesh" id="SphereMesh_qp131"]
 radius = 14.0
@@ -198,6 +199,30 @@ tracks/0/keys = {
 "update": 0,
 "values": [Color(1, 1, 1, 1)]
 }
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("EffectParticles:emitting")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("AnimatedSprite2D:skew")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
 
 [sub_resource type="Animation" id="Animation_2nxwx"]
 resource_name = "Self Destruct"
@@ -214,11 +239,97 @@ tracks/0/keys = {
 "values": [Color(1, 1, 1, 1), Color(1.496, 0, 0, 1)]
 }
 
+[sub_resource type="Animation" id="Animation_rvmyp"]
+resource_name = "Electric Pulse"
+length = 2.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("EffectParticles:emitting")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 2.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+
+[sub_resource type="Animation" id="Animation_jdgko"]
+resource_name = "DashReady"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:skew")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 2.5),
+"update": 0,
+"values": [0.0, -0.8063421144213803]
+}
+
+[sub_resource type="Animation" id="Animation_j4qr3"]
+resource_name = "DashNow"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("EffectParticles:emitting")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AnimatedSprite2D:skew")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_jdgko"]
 _data = {
+&"DashNow": SubResource("Animation_j4qr3"),
+&"DashReady": SubResource("Animation_jdgko"),
+&"Electric Pulse": SubResource("Animation_rvmyp"),
 &"RESET": SubResource("Animation_52xpa"),
 &"Self Destruct": SubResource("Animation_2nxwx")
 }
+
+[sub_resource type="Gradient" id="Gradient_2nxwx"]
+colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_52xpa"]
+gradient = SubResource("Gradient_2nxwx")
+
+[sub_resource type="Curve" id="Curve_jdgko"]
+_data = [Vector2(0.030303031, 0), 0.0, 6.717779, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_j4qr3"]
+curve = SubResource("Curve_jdgko")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_73x2u"]
+particle_flag_disable_z = true
+angle_min = -720.0
+angle_max = 720.0
+spread = 180.0
+initial_velocity_min = 8.0
+initial_velocity_max = 18.0
+gravity = Vector3(0, 0, 0)
+scale_curve = SubResource("CurveTexture_j4qr3")
+color_ramp = SubResource("GradientTexture1D_52xpa")
 
 [node name="Enemy" type="CharacterBody2D" groups=["Enemies"]]
 z_index = 1
@@ -235,6 +346,7 @@ mesh = SubResource("SphereMesh_qp131")
 sprite_frames = SubResource("SpriteFrames_rvmyp")
 
 [node name="EnemyCollider" type="CollisionShape2D" parent="."]
+visible = false
 shape = SubResource("CircleShape2D_2nxwx")
 
 [node name="GunParticles" type="GPUParticles2D" parent="."]
@@ -248,7 +360,19 @@ explosiveness = 0.95
 local_coords = true
 process_material = SubResource("ParticleProcessMaterial_3sc0p")
 
+[node name="GunParticles2" type="GPUParticles2D" parent="."]
+texture_filter = 1
+position = Vector2(10, 0)
+emitting = false
+texture = ExtResource("4_dfun0")
+lifetime = 0.2
+one_shot = true
+explosiveness = 0.95
+local_coords = true
+process_material = SubResource("ParticleProcessMaterial_3sc0p")
+
 [node name="DetectionArea" type="Area2D" parent="."]
+visible = false
 
 [node name="DetectionCollider" type="CollisionShape2D" parent="DetectionArea"]
 shape = SubResource("CircleShape2D_1stxh")
@@ -272,6 +396,13 @@ autoplay = "Idle"
 libraries = {
 &"": SubResource("AnimationLibrary_jdgko")
 }
+
+[node name="EffectParticles" type="GPUParticles2D" parent="."]
+self_modulate = Color(4.45484, 4.45484, 0, 0.2784314)
+emitting = false
+texture = ExtResource("5_qp131")
+lifetime = 2.0
+process_material = SubResource("ParticleProcessMaterial_73x2u")
 
 [connection signal="body_entered" from="DetectionArea" to="." method="_on_detection_area_body_entered"]
 [connection signal="body_exited" from="DetectionArea" to="." method="_on_detection_area_body_exited"]
