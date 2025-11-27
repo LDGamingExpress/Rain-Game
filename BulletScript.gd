@@ -2,6 +2,7 @@ extends CharacterBody2D
 var Team = null # Group the bullet comes from, set when created
 var Damage = 1 # Damage the bullet does, set when created
 var ImpactP = load("res://ImpactParticles.tscn")
+var Explosion = preload("res://Explosion.tscn")
 var TimeRange = 2.0
 var Frame = 0
 
@@ -33,6 +34,11 @@ func _on_hit_area_body_entered(body): # Activated when the bullet hits an object
 		elif body.is_in_group("Enemies"):
 			CanDelete = false
 	if CanDelete:
+		if Frame == 3:
+			var NewE = Explosion.instantiate()
+			NewE.position = position
+			NewE.Team = Team
+			get_parent().add_child(NewE)
 		var NewObj = ImpactP.instantiate()
 		NewObj.position = position
 		get_parent().add_child(NewObj)
