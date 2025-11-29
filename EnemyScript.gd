@@ -106,10 +106,10 @@ func _physics_process(_delta):
 				Target = position + Vector2(rng.randi_range(-10,10),rng.randi_range(-10,10)) - 20 * Vector2(cos(-rotation),sin(-rotation))
 				# Sets a new target position
 				Movement = "Random" # Sets movement type to random
-			elif sqrt(pow((position.x - LastPos.x),2) + pow((position.y - LastPos.y),2)) < 0.5: # Checks if they are stuck
-				Target = position + Vector2(rng.randi_range(-50,50),rng.randi_range(-50,50))
+			#elif sqrt(pow((position.x - LastPos.x),2) + pow((position.y - LastPos.y),2)) < 0.5: # Checks if they are stuck
+			#	Target = position + Vector2(rng.randi_range(-50,50),rng.randi_range(-50,50))
 				# Sets a new target position
-				Movement = "Random" # Sets movement type to random
+			#	Movement = "Random" # Sets movement type to random
 			elif sqrt(pow((position.x - Target.position.x),2) + pow((position.y - Target.position.y),2)) < AttackRange:
 				# Checks if the enemy is within a certain distance of their target
 				Movement = "Shooting" # Changes movement type to shooting

@@ -373,7 +373,7 @@ colors = PackedColorArray(0, 0.7176471, 1, 0, 0, 0.53333336, 1, 1)
 
 [sub_resource type="GradientTexture1D" id="GradientTexture1D_5ncpa"]
 gradient = SubResource("Gradient_dtqjt")
-width = 10
+width = 15
 
 [sub_resource type="Gradient" id="Gradient_wi0c6"]
 colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
@@ -554,6 +554,39 @@ layout_mode = 2
 mouse_default_cursor_shape = 2
 text = "Quit"
 
+[node name="NoteContainer" type="PanelContainer" parent="PlayerCam/CanvasLayer"]
+visible = false
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -40.0
+offset_top = -40.0
+grow_horizontal = 0
+grow_vertical = 0
+theme = ExtResource("4_dtqjt")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PlayerCam/CanvasLayer/NoteContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="PlayerCam/CanvasLayer/NoteContainer/VBoxContainer"]
+layout_mode = 2
+text = "Note:"
+
+[node name="Label2" type="Label" parent="PlayerCam/CanvasLayer/NoteContainer/VBoxContainer"]
+custom_minimum_size = Vector2(500, 0)
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah"
+autowrap_mode = 2
+
+[node name="Label3" type="Label" parent="PlayerCam/CanvasLayer/NoteContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "Press F to Discard"
+horizontal_alignment = 1
+
 [node name="BloodParticles" type="GPUParticles2D" parent="."]
 self_modulate = Color(0, 3.3529627, 0, 1)
 emitting = false
@@ -571,6 +604,7 @@ autoplay = "Idle"
 speed_scale = 1.5
 
 [node name="TakeOverArea" type="Area2D" parent="."]
+collision_mask = 5
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="TakeOverArea"]
 shape = SubResource("CircleShape2D_hp6x6")
@@ -591,6 +625,7 @@ process_material = SubResource("ParticleProcessMaterial_l6ohk")
 one_shot = true
 
 [node name="MusicPlayer" type="AudioStreamPlayer" parent="."]
+process_mode = 3
 
 [node name="RainParticles" type="GPUParticles2D" parent="."]
 emitting = false

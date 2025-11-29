@@ -1,0 +1,31 @@
+[gd_scene load_steps=5 format=3 uid="uid://b77pneu73n5ag"]
+
+[ext_resource type="Texture2D" uid="uid://cbe2t5hldn12a" path="res://Textures/RainGameEntitiesTiles.png" id="1_ohp5f"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8xyx0"]
+atlas = ExtResource("1_ohp5f")
+region = Rect2(32, 160, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_bkc4t"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8xyx0")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ursuo"]
+size = Vector2(28, 28)
+
+[node name="PlantCrate" type="StaticBody2D" groups=["PlantCrate"]]
+collision_layer = 3
+collision_mask = 3
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_bkc4t")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_ursuo")

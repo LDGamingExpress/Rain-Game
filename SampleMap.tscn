@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=4 uid="uid://ulx7dqu3h6un"]
+[gd_scene load_steps=19 format=4 uid="uid://ulx7dqu3h6un"]
 
 [ext_resource type="Script" uid="uid://wjmsta8kuqkr" path="res://MapScript.gd" id="1_si0pi"]
 [ext_resource type="TileSet" uid="uid://61ght8m4gdvs" path="res://TerrainTileSet.tres" id="3_a5383"]
@@ -8,6 +8,7 @@
 [ext_resource type="PackedScene" uid="uid://bchyjdelrnvqb" path="res://Player.tscn" id="5_bn4gl"]
 [ext_resource type="PackedScene" uid="uid://ctxn0wvcvgmpp" path="res://Enemy.tscn" id="5_few4t"]
 [ext_resource type="PackedScene" uid="uid://dwmvf03kimj50" path="res://Spawner.tscn" id="7_l36ww"]
+[ext_resource type="PackedScene" uid="uid://bwx5url7rhe02" path="res://Note.tscn" id="9_vn1lp"]
 
 [sub_resource type="Gradient" id="Gradient_lpy5r"]
 offsets = PackedFloat32Array(0, 0.55932206, 1)
@@ -123,7 +124,7 @@ tile_map_data = PackedByteArray("AADt/+3/AAAFAAQAAADt/+7/AAAFAAQAAADr/+r/AAAFAAQ
 tile_set = ExtResource("4_vn1lp")
 
 [node name="EntityLayer" type="TileMapLayer" parent="."]
-tile_map_data = PackedByteArray("AABJAPL/AAAAAAAAAQA=")
+tile_map_data = PackedByteArray("AABJAPL/AAAAAAAAAQAJAAEAAAAAAAAAAgALAPv/AAAAAAAAAwA=")
 tile_set = ExtResource("5_5ec3y")
 
 [node name="ColorRect" type="ColorRect" parent="."]
@@ -206,3 +207,8 @@ WaitTime = 50.0
 [node name="Enemy16" parent="." instance=ExtResource("5_few4t")]
 position = Vector2(2330, -475)
 EnemyType = "Bishop"
+
+[node name="Note" parent="." instance=ExtResource("9_vn1lp")]
+position = Vector2(415, 590)
+metadata/Title = "Office Note"
+metadata/Contents = "Management has us working overtime for some reason. Apparently the someone from up top really wants the P.A.W.N. Project done soon and has been threatening cut our bonuses if its not finished by the end of the month."

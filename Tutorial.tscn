@@ -216,6 +216,12 @@ position = Vector2(1893, -242)
 EnemyType = "Pawn"
 WaitTime = 10.0
 
+[node name="Spawner3" parent="." instance=ExtResource("7_hp7xp")]
+position = Vector2(-951, 322)
+EnemyType = "Pawn"
+SpawnNumber = 3
+WaitTime = 50.0
+
 [node name="TutorialText" type="Control" parent="."]
 layout_mode = 3
 anchors_preset = 0
@@ -277,9 +283,3 @@ offset_top = 284.0
 offset_right = 2190.0
 offset_bottom = 320.0
 text = "<--- Goal"
-
-[node name="Spawner3" parent="." instance=ExtResource("7_hp7xp")]
-position = Vector2(-951, 322)
-EnemyType = "Pawn"
-SpawnNumber = 3
-WaitTime = 50.0

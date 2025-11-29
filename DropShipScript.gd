@@ -12,7 +12,7 @@ func _ready() -> void:
 	queue_free()
 
 func _physics_process(_delta: float) -> void:
-	if sqrt(pow(position.x - EndPoint.x,2) + pow(position.y - EndPoint.y,2)) < 200.0 and !Spawned:
+	if sqrt(pow(position.x - EndPoint.x,2) + pow(position.y - EndPoint.y,2)) < 50.0 and !Spawned:
 		SpawnUnits()
 	move_and_slide()
 

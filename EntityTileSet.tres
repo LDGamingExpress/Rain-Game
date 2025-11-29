@@ -1,9 +1,13 @@
-[gd_resource type="TileSet" load_steps=3 format=3 uid="uid://3eeypvits7ta"]
+[gd_resource type="TileSet" load_steps=5 format=3 uid="uid://3eeypvits7ta"]
 
 [ext_resource type="PackedScene" uid="uid://bgbrpogfs0kvs" path="res://AntiRainMachine.tscn" id="1_y5vy6"]
+[ext_resource type="PackedScene" uid="uid://ctgdtolqcyxq0" path="res://Crate.tscn" id="2_nhd3u"]
+[ext_resource type="PackedScene" uid="uid://b77pneu73n5ag" path="res://PlantCrate.tscn" id="3_pqbtt"]
 
 [sub_resource type="TileSetScenesCollectionSource" id="TileSetScenesCollectionSource_nhd3u"]
 scenes/1/scene = ExtResource("1_y5vy6")
+scenes/2/scene = ExtResource("2_nhd3u")
+scenes/3/scene = ExtResource("3_pqbtt")
 
 [resource]
 tile_size = Vector2i(32, 32)

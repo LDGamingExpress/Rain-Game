@@ -10,7 +10,8 @@ var PlayerTypes = {
 	"Knight": ["Laser","Dash",Color(5.51, 5.158, 0.0, 0.839),3,5,130.0,[Vector2(8.0,-11.5),Vector2(8.0,11.5)]],
 	"Rook": ["Plasma","Plasma Burst",Color(5.51, 5.158, 0.0, 0.839),4,12,105.0,[Vector2(10.0,0.0)]]
 }
-var Maps = [];
+var Maps = ["res://Tutorial.tscn","res://Map1.tscn"];
+var MapNames = ["Tutorial","Outlying Outpost"]
 var CurrentMap = 0
 var MapWon = false
 var CurrentPlayerType = "Plant"

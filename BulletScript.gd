@@ -33,6 +33,21 @@ func _on_hit_area_body_entered(body): # Activated when the bullet hits an object
 			body.TakeDamage(Damage) # Damages the player or ally
 		elif body.is_in_group("Enemies"):
 			CanDelete = false
+	if body.is_in_group("Crate"):
+		var NewObj = ImpactP.instantiate()
+		NewObj.position = body.position
+		NewObj.self_modulate = Color(0.982, 0.423, 0.0, 1.0)
+		get_parent().add_child(NewObj)
+		body.queue_free()
+	if body.is_in_group("PlantCrate"):
+		var NewObj = ImpactP.instantiate()
+		NewObj.position = body.position
+		NewObj.self_modulate = Color(0.982, 0.423, 0.0, 1.0)
+		get_parent().add_child(NewObj)
+		var NewObj2 = load("res://PlantMatter.tscn").instantiate()
+		NewObj2.position = body.position
+		get_parent().call_deferred("add_child",NewObj2)
+		body.queue_free()
 	if CanDelete:
 		if Frame == 3:
 			var NewE = Explosion.instantiate()

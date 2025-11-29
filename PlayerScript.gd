@@ -15,8 +15,11 @@ var SpecialReady = 1
 var ShootType = "Seed"
 var SpecialType = "Take Over"
 var NearEnemies = []
+var PlantBonus = 1.0
 
 var RainMachine = null
+var Note = null
+var Reading = false
 
 func _ready() -> void:
 	CheckTypeStats()
@@ -27,8 +30,8 @@ func CheckTypeStats():
 	SpecialType = Globals.PlayerTypes[Globals.CurrentPlayerType][1]
 	$BloodParticles.self_modulate = Globals.PlayerTypes[Globals.CurrentPlayerType][2]
 	$PlayerSprite.frame = Globals.PlayerTypes[Globals.CurrentPlayerType][3]
-	Health = Globals.PlayerTypes[Globals.CurrentPlayerType][4]
-	SPEED = Globals.PlayerTypes[Globals.CurrentPlayerType][5]
+	Health = Globals.PlayerTypes[Globals.CurrentPlayerType][4] * PlantBonus
+	SPEED = Globals.PlayerTypes[Globals.CurrentPlayerType][5] * PlantBonus
 	match ShootType:
 		"Seed":
 			Firerate = 0.2
@@ -56,6 +59,8 @@ func CheckTypeStats():
 			Specialrate = 5.0
 		"Plasma Burst":
 			Specialrate = 10.0
+	Damage = Damage * PlantBonus
+	Specialrate = Specialrate - (PlantBonus - 1.0)
 	$PlayerCam/CanvasLayer/VBoxContainer/SpecialLabel.text = SpecialType
 	$GunParticles.position = Globals.PlayerTypes[Globals.CurrentPlayerType][6][0]
 	if len(Globals.PlayerTypes[Globals.CurrentPlayerType][6]) > 1:
@@ -198,6 +203,17 @@ func _physics_process(_delta):
 				Globals.MapWon = true
 				$PlayerCam/CanvasLayer/Win.visible = true
 				#print("Win")
+		var JustOpened = false
+		if Note != null:
+			if Reading == false:
+				JustOpened = true
+				Reading = true
+				$PlayerCam/CanvasLayer/NoteContainer.visible = true
+				$PlayerCam/CanvasLayer/NoteContainer/VBoxContainer/Label.text = Note.get_meta("Title")
+				$PlayerCam/CanvasLayer/NoteContainer/VBoxContainer/Label2.text = Note.get_meta("Contents")
+		if Reading == true and !JustOpened:
+			Reading = false
+			$PlayerCam/CanvasLayer/NoteContainer.visible = false
 	move_and_slide() # Moves player based on velocity
 
 func PrepNextFire(): # Prepares to fire after last shot
@@ -254,6 +270,17 @@ func _on_take_over_area_body_entered(body: Node2D) -> void:
 	if body.is_in_group("RainMachine"):
 		RainMachine = body
 		body.get_child(3).visible = true
+	if body.is_in_group("PlantMatter"):
+		var NewObj = load("res://ImpactParticles.tscn").instantiate()
+		NewObj.position = body.position
+		NewObj.self_modulate = Color(0.0, 0.672, 0.0, 1.0)
+		get_parent().add_child(NewObj)
+		body.queue_free()
+		PlantBonus += 0.25
+		CheckTypeStats()
+	if body.is_in_group("Notes"):
+		Note = body
+		body.get_child(2).visible = true
 
 
 func _on_take_over_area_body_exited(body: Node2D) -> void:
@@ -262,6 +289,10 @@ func _on_take_over_area_body_exited(body: Node2D) -> void:
 	if body.is_in_group("RainMachine"):
 		RainMachine = null
 		body.get_child(3).visible = false
+	if body.is_in_group("Notes"):
+		#if Note == body and Reading == false:
+		body.get_child(2).visible = false
+		Note = null
 
 func ElectricPulse():
 	$EffectParticles.self_modulate = Color(4.455, 4.455, 0.0, 0.278)
