@@ -22,6 +22,7 @@ var Note = null
 var Reading = false
 
 func _ready() -> void:
+	$PlayerCam/CanvasLayer/MapTitle.text = Globals.MapNames[Globals.CurrentMap]
 	CheckTypeStats()
 	MusicPlayer()
 
@@ -334,11 +335,12 @@ func MusicPlayer():
 
 
 func _on_restart_pressed() -> void:
+	get_tree().paused = false
 	get_tree().reload_current_scene()
 
 
 func _on_main_menu_pressed() -> void:
-	pass # Replace with function body.
+	get_tree().paused = false
 
 
 func _on_quit_pressed() -> void:
@@ -346,4 +348,9 @@ func _on_quit_pressed() -> void:
 
 
 func _on_next_map_pressed() -> void:
-	pass # Replace with function body.
+	get_tree().paused = false
+	Globals.CurrentMap += 1
+	print(Globals.CurrentMap)
+	if Globals.CurrentMap <= len(Globals.Maps) - 1:
+		Globals.MapWon = false
+		get_tree().change_scene_to_file(Globals.Maps[Globals.CurrentMap])

@@ -6,12 +6,16 @@ var DoDamage = true
 func _ready() -> void:
 	emitting = true
 	$GPUParticles2D.emitting = true
-	var MapPos = Globals.PropLayer.local_to_map(position)
-	Globals.PropLayer.set_cell(MapPos,-1)
-	Globals.PropLayer.set_cell(MapPos + Vector2i(-1,0),-1)
-	Globals.PropLayer.set_cell(MapPos + Vector2i(1,0),-1)
-	Globals.PropLayer.set_cell(MapPos + Vector2i(0,-1),-1)
-	Globals.PropLayer.set_cell(MapPos + Vector2i(0,1),-1)
+	if Globals.PropLayer != null:
+		var MapPos = Globals.PropLayer.local_to_map(position)
+		Globals.PropLayer.set_cell(MapPos,-1)
+		Globals.PropLayer.set_cell(MapPos + Vector2i(-1,0),-1)
+		Globals.PropLayer.set_cell(MapPos + Vector2i(1,0),-1)
+		Globals.PropLayer.set_cell(MapPos + Vector2i(0,-1),-1)
+		Globals.PropLayer.set_cell(MapPos + Vector2i(0,1),-1)
+	else:
+		print("Error")
+		print(Globals.PropLayer)
 	await get_tree().create_timer(0.2).timeout
 	DoDamage = false
 
