@@ -234,7 +234,7 @@ position = Vector2(658, -533)
 EnemyType = "Bishop"
 
 [node name="Enemy4" parent="." instance=ExtResource("8_rpcyw")]
-position = Vector2(484, -841)
+position = Vector2(593, -906)
 EnemyType = "Bishop"
 
 [node name="Enemy5" parent="." instance=ExtResource("8_rpcyw")]
@@ -245,7 +245,7 @@ EnemyType = "Bishop"
 position = Vector2(477, -491)
 
 [node name="Enemy7" parent="." instance=ExtResource("8_rpcyw")]
-position = Vector2(184, -778)
+position = Vector2(320, -931)
 
 [node name="Enemy8" parent="." instance=ExtResource("8_rpcyw")]
 position = Vector2(1698, -900)

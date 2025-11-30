@@ -238,7 +238,8 @@ func TakeDamage(DamageTaken): # Handles damage from hostiles
 			Globals.CurrentPlayerType = "Plant"
 			CheckTypeStats()
 		else:
-			await get_tree().create_timer(1).timeout # Gives 1 second for particles to finish
+			#await get_tree().create_timer(1).timeout # Gives 1 second for particles to finish
+			$PlayerSprite.visible = false
 			get_tree().paused = true
 			$PlayerCam/CanvasLayer/GameOver.visible = true
 			#print("GameOver") # Prints gameover to indicate player should be dead
@@ -256,14 +257,15 @@ func TakeOver():
 func SelfDestruct():
 	$SpecialAnimationPlayer.play("Self Destruct")
 	await get_tree().create_timer(1.0).timeout
-	var NewObj = ExplosionObj.instantiate()
-	NewObj.position = global_position
-	NewObj.Team = "Player"
-	NewObj.Damage = 8
-	get_parent().add_child(NewObj)
-	Globals.CurrentPlayerType = "Plant"
-	CheckTypeStats()
-	$SpecialAnimationPlayer.play("RESET")
+	if Globals.CurrentPlayerType != "Plant":
+		var NewObj = ExplosionObj.instantiate()
+		NewObj.position = global_position
+		NewObj.Team = "Player"
+		NewObj.Damage = 8
+		get_parent().add_child(NewObj)
+		Globals.CurrentPlayerType = "Plant"
+		CheckTypeStats()
+		$SpecialAnimationPlayer.play("RESET")
 
 func _on_take_over_area_body_entered(body: Node2D) -> void:
 	if body.is_in_group("Enemies"):
@@ -299,35 +301,38 @@ func ElectricPulse():
 	$EffectParticles.self_modulate = Color(4.455, 4.455, 0.0, 0.278)
 	$SpecialAnimationPlayer.play("Electric Pulse")
 	await get_tree().create_timer(2.5).timeout
-	for i in range(0,15):
-		var NewBul = BulletObj.instantiate() # Instantiates/Creates bullet object
-		NewBul.position = global_position # Sets bullet to gun position
-		NewBul.rotation = i * 2*PI/16 # Rotates bullet to match rotation
-		NewBul.Team = "Player" # Sets team to match group
-		NewBul.Damage = Damage # Gives bullet enemy's damage
-		NewBul.Frame = 1
-		get_parent().add_child(NewBul) # Creates bullet as child of parent
+	if Globals.CurrentPlayerType != "Plant":
+		for i in range(0,15):
+			var NewBul = BulletObj.instantiate() # Instantiates/Creates bullet object
+			NewBul.position = global_position # Sets bullet to gun position
+			NewBul.rotation = i * 2*PI/16 # Rotates bullet to match rotation
+			NewBul.Team = "Player" # Sets team to match group
+			NewBul.Damage = Damage # Gives bullet enemy's damage
+			NewBul.Frame = 1
+			get_parent().add_child(NewBul) # Creates bullet as child of parent
 
 func Dash():
 	$SpecialAnimationPlayer.play("DashReady")
 	await get_tree().create_timer(1.0).timeout
-	$EffectParticles.self_modulate = Color(1.543, 1.543, 1.53, 0.278)
-	$SpecialAnimationPlayer.play("DashNow")
-	velocity += 3000.0 * Vector2(cos(rotation),sin(rotation))
-	move_and_slide()
+	if Globals.CurrentPlayerType != "Plant":
+		$EffectParticles.self_modulate = Color(1.543, 1.543, 1.53, 0.278)
+		$SpecialAnimationPlayer.play("DashNow")
+		velocity += 3000.0 * Vector2(cos(rotation),sin(rotation))
+		move_and_slide()
 
 func PlasmaBurst():
 	$EffectParticles.self_modulate = Color(2.253, 0.0, 1.966, 0.278)
 	$SpecialAnimationPlayer.play("Electric Pulse")
 	await get_tree().create_timer(2.5).timeout
-	for i in range(0,25):
-		var NewBul = BulletObj.instantiate() # Instantiates/Creates bullet object
-		NewBul.position = global_position # Sets bullet to gun position
-		NewBul.rotation = i * 2*PI/26 # Rotates bullet to match rotation
-		NewBul.Team = "Player" # Sets team to match group
-		NewBul.Damage = Damage # Gives bullet enemy's damage
-		NewBul.Frame = 3
-		get_parent().add_child(NewBul) # Creates bullet as child of parent
+	if Globals.CurrentPlayerType != "Plant":
+		for i in range(0,25):
+			var NewBul = BulletObj.instantiate() # Instantiates/Creates bullet object
+			NewBul.position = global_position # Sets bullet to gun position
+			NewBul.rotation = i * 2*PI/26 # Rotates bullet to match rotation
+			NewBul.Team = "Player" # Sets team to match group
+			NewBul.Damage = Damage # Gives bullet enemy's damage
+			NewBul.Frame = 3
+			get_parent().add_child(NewBul) # Creates bullet as child of parent
 
 func MusicPlayer():
 	$MusicPlayer.stream = Music[randi_range(0,len(Music)-1)]
