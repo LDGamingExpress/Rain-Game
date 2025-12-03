@@ -1,9 +1,14 @@
 extends GPUParticles2D
+@onready var SFX := preload("res://SFXObject.tscn")
 var Team = null # Group the bullet comes from, set when created
 var Damage = 1 # Damage the bullet does, set when created
 var DoDamage = true
 
 func _ready() -> void:
+	var NewSFX = SFX.instantiate()
+	NewSFX.stream = load("res://SFX/Explosion1.mp3")
+	NewSFX.position = position
+	get_parent().call_deferred("add_child",NewSFX)
 	emitting = true
 	$GPUParticles2D.emitting = true
 	if Globals.PropLayer != null:

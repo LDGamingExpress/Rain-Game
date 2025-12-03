@@ -649,6 +649,31 @@ libraries = {
 autoplay = "LoadIn"
 speed_scale = 0.8
 
+[node name="PauseMenu1" type="VBoxContainer" parent="PlayerCam/CanvasLayer"]
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -93.0
+offset_bottom = 40.0
+grow_horizontal = 0
+theme = ExtResource("4_dtqjt")
+
+[node name="PauseButton" type="Button" parent="PlayerCam/CanvasLayer/PauseMenu1"]
+layout_mode = 2
+text = "Pause"
+
+[node name="PauseMenu2" type="VBoxContainer" parent="PlayerCam/CanvasLayer/PauseMenu1"]
+visible = false
+layout_mode = 2
+
+[node name="MainMenu" type="Button" parent="PlayerCam/CanvasLayer/PauseMenu1/PauseMenu2"]
+layout_mode = 2
+text = "Main Menu"
+
+[node name="Quit" type="Button" parent="PlayerCam/CanvasLayer/PauseMenu1/PauseMenu2"]
+layout_mode = 2
+text = "Quit"
+
 [node name="BloodParticles" type="GPUParticles2D" parent="."]
 self_modulate = Color(0, 3.3529627, 0, 1)
 emitting = false
@@ -688,6 +713,7 @@ one_shot = true
 
 [node name="MusicPlayer" type="AudioStreamPlayer" parent="."]
 process_mode = 3
+bus = &"Music"
 
 [node name="RainParticles" type="GPUParticles2D" parent="."]
 emitting = false
@@ -697,12 +723,23 @@ lifetime = 4.0
 randomness = 0.62
 process_material = SubResource("ParticleProcessMaterial_oudfo")
 
+[node name="AudioListener2D" type="AudioListener2D" parent="."]
+current = true
+
+[node name="WalkTimer" type="Timer" parent="."]
+wait_time = 0.4
+one_shot = true
+
 [connection signal="pressed" from="PlayerCam/CanvasLayer/GameOver/Restart" to="." method="_on_restart_pressed"]
 [connection signal="pressed" from="PlayerCam/CanvasLayer/GameOver/MainMenu" to="." method="_on_main_menu_pressed"]
 [connection signal="pressed" from="PlayerCam/CanvasLayer/GameOver/Quit" to="." method="_on_quit_pressed"]
 [connection signal="pressed" from="PlayerCam/CanvasLayer/Win/NextMap" to="." method="_on_next_map_pressed"]
 [connection signal="pressed" from="PlayerCam/CanvasLayer/Win/MainMenu" to="." method="_on_main_menu_pressed"]
 [connection signal="pressed" from="PlayerCam/CanvasLayer/Win/Quit" to="." method="_on_quit_pressed"]
+[connection signal="pressed" from="PlayerCam/CanvasLayer/PauseMenu1/PauseButton" to="." method="_on_pause_button_pressed"]
+[connection signal="pressed" from="PlayerCam/CanvasLayer/PauseMenu1/PauseMenu2/MainMenu" to="." method="_on_main_menu_pressed"]
+[connection signal="pressed" from="PlayerCam/CanvasLayer/PauseMenu1/PauseMenu2/Quit" to="." method="_on_quit_pressed"]
 [connection signal="body_entered" from="TakeOverArea" to="." method="_on_take_over_area_body_entered"]
 [connection signal="body_exited" from="TakeOverArea" to="." method="_on_take_over_area_body_exited"]
 [connection signal="finished" from="MusicPlayer" to="." method="MusicPlayer"]
+[connection signal="timeout" from="WalkTimer" to="." method="_on_walk_timer_timeout"]

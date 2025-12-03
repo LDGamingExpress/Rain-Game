@@ -10,10 +10,12 @@ config_version=5
 
 [application]
 
-config/name="Rain Game"
-run/main_scene="res://SampleMap.tscn"
+config/name="A World Without Rain"
+config/description="Rain is gone from the world and nothing but a wasteland and vast series of automated complexes remain. Only a single plant remains to retake the planet, give life a chance to flourish again, and bring back the rain."
+run/main_scene="uid://dk0ucabr7yiy"
 config/features=PackedStringArray("4.5", "Forward Plus")
-config/icon="res://icon.svg"
+boot_splash/image="uid://ce7a34ytg8cfd"
+config/icon="uid://ce7a34ytg8cfd"
 
 [autoload]
 

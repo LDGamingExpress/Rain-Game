@@ -2,6 +2,7 @@ extends CharacterBody2D
 @onready var BulletObj := preload("res://Bullet.tscn") # Bullet object to be spawned
 @onready var MeleeObj := preload("res://MeleeNode.tscn")
 @onready var ExplosionObj := preload("res://Explosion.tscn")
+@onready var SFX := preload("res://SFXObject.tscn")
 
 var Music = [preload("res://Music/Cyber City Scramble.mp3"),preload("res://Music/Dark Future.mp3")]
 
@@ -20,6 +21,8 @@ var PlantBonus = 1.0
 var RainMachine = null
 var Note = null
 var Reading = false
+
+var WalkReady = true
 
 func _ready() -> void:
 	$PlayerCam/CanvasLayer/MapTitle.text = Globals.MapNames[Globals.CurrentMap]
@@ -111,6 +114,13 @@ func _physics_process(_delta):
 		#velocity = -SPEED * Vector2(cos(rotation),sin(rotation)) # Moves backward relative of rotation
 	if Moving:
 		$AnimationPlayer.play("Walking")
+		if WalkReady:
+			var NewSFX = SFX.instantiate()
+			NewSFX.stream = load("res://SFX/RobotFootstep1.mp3")
+			NewSFX.position = position
+			get_parent().call_deferred("add_child",NewSFX)
+			WalkReady = false
+			$WalkTimer.start()
 	else:
 		$AnimationPlayer.play("Idle")
 	# Shooting controls
@@ -127,6 +137,10 @@ func _physics_process(_delta):
 					NewBul.Team = "Player" # Sets team to match group
 					NewBul.Damage = Damage # Gives bullet player's damage
 					get_parent().add_child(NewBul) # Creates bullet as child of parent
+					var NewSFX = SFX.instantiate()
+					NewSFX.stream = load("res://SFX/NeedleSoundEffect.mp3")
+					NewSFX.position = position
+					get_parent().call_deferred("add_child",NewSFX)
 				"Melee":
 					var NewObj = MeleeObj.instantiate()
 					NewObj.position = Vector2(7,0)
@@ -134,6 +148,10 @@ func _physics_process(_delta):
 					NewObj.Damage = Damage
 					add_child(NewObj)
 					PrepNextFire() # Gun is prepared to fire again
+					var NewSFX = SFX.instantiate()
+					NewSFX.stream = load("res://SFX/Melee1.mp3")
+					NewSFX.position = position
+					get_parent().call_deferred("add_child",NewSFX)
 				"Bolt":
 					$GunParticles.restart() # Particles are activated
 					PrepNextFire() # Gun is prepared to fire again
@@ -144,6 +162,10 @@ func _physics_process(_delta):
 					NewBul.Damage = Damage # Gives bullet enemy's damage
 					NewBul.Frame = 1
 					get_parent().add_child(NewBul) # Creates bullet as child of parent
+					var NewSFX = SFX.instantiate()
+					NewSFX.stream = load("res://SFX/LaserSFX2.mp3")
+					NewSFX.position = position
+					get_parent().call_deferred("add_child",NewSFX)
 				"Laser":
 					$GunParticles.restart() # Particles are activated
 					PrepNextFire() # Gun is prepared to fire again
@@ -163,6 +185,10 @@ func _physics_process(_delta):
 					NewBul2.Damage = Damage # Gives bullet enemy's damage
 					NewBul2.Frame = 2
 					get_parent().add_child(NewBul2) # Creates bullet as child of parent
+					var NewSFX = SFX.instantiate()
+					NewSFX.stream = load("res://SFX/LaserSoundEffect.mp3")
+					NewSFX.position = position
+					get_parent().call_deferred("add_child",NewSFX)
 				"Plasma":
 					$GunParticles.restart() # Particles are activated
 					PrepNextFire() # Gun is prepared to fire again
@@ -173,6 +199,10 @@ func _physics_process(_delta):
 					NewBul.Damage = Damage # Gives bullet enemy's damage
 					NewBul.Frame = 3
 					get_parent().add_child(NewBul) # Creates bullet as child of parent
+					var NewSFX = SFX.instantiate()
+					NewSFX.stream = load("res://SFX/PlasmaShootSoundEffect.mp3")
+					NewSFX.position = position
+					get_parent().call_deferred("add_child",NewSFX)
 	if Input.is_action_just_pressed("Special"):
 		if SpecialReady == 1:
 			match SpecialType:
@@ -346,6 +376,7 @@ func _on_restart_pressed() -> void:
 
 func _on_main_menu_pressed() -> void:
 	get_tree().paused = false
+	get_tree().change_scene_to_file("res://MainMenu.tscn")
 
 
 func _on_quit_pressed() -> void:
@@ -359,3 +390,18 @@ func _on_next_map_pressed() -> void:
 	if Globals.CurrentMap <= len(Globals.Maps) - 1:
 		Globals.MapWon = false
 		get_tree().change_scene_to_file(Globals.Maps[Globals.CurrentMap])
+
+
+func _on_pause_button_pressed() -> void:
+	if $PlayerCam/CanvasLayer/PauseMenu1/PauseMenu2.visible:
+		$PlayerCam/CanvasLayer/PauseMenu1/PauseMenu2.visible = false
+		get_tree().paused = false
+		$PlayerCam/CanvasLayer/PauseMenu1/PauseButton.text = "Pause"
+	else:
+		$PlayerCam/CanvasLayer/PauseMenu1/PauseMenu2.visible = true
+		get_tree().paused = true
+		$PlayerCam/CanvasLayer/PauseMenu1/PauseButton.text = "Resume"
+
+
+func _on_walk_timer_timeout() -> void:
+	WalkReady = true
