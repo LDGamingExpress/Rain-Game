@@ -259,6 +259,10 @@ text = "Island Base"
 layout_mode = 2
 text = "Offshore Lair"
 
+[node name="Map4" type="Button" parent="Camera2D/CanvasLayer/MenuContainer/MapSelection"]
+layout_mode = 2
+text = "Stronghold"
+
 [node name="HSeparator2" type="HSeparator" parent="Camera2D/CanvasLayer/MenuContainer"]
 visible = false
 layout_mode = 2
@@ -283,4 +287,5 @@ bus = &"Music"
 [connection signal="pressed" from="Camera2D/CanvasLayer/MenuContainer/MapSelection/Map1" to="." method="_on_map_1_pressed"]
 [connection signal="pressed" from="Camera2D/CanvasLayer/MenuContainer/MapSelection/Map2" to="." method="_on_map_2_pressed"]
 [connection signal="pressed" from="Camera2D/CanvasLayer/MenuContainer/MapSelection/Map3" to="." method="_on_map_3_pressed"]
+[connection signal="pressed" from="Camera2D/CanvasLayer/MenuContainer/MapSelection/Map4" to="." method="_on_map_4_pressed"]
 [connection signal="pressed" from="Camera2D/CanvasLayer/MenuContainer/Exit" to="." method="_on_exit_pressed"]

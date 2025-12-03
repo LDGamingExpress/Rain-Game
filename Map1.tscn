@@ -10,7 +10,7 @@
 [ext_resource type="PackedScene" uid="uid://dwmvf03kimj50" path="res://Spawner.tscn" id="8_fgv63"]
 [ext_resource type="PackedScene" uid="uid://bwx5url7rhe02" path="res://Note.tscn" id="9_v0hs2"]
 
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_qk1ka"]
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_v0hs2"]
 texture = ExtResource("3_ns8y8")
 texture_region_size = Vector2i(32, 32)
 0:0/0 = 0
@@ -55,7 +55,7 @@ tile_size = Vector2i(32, 32)
 physics_layer_0/collision_layer = 1
 physics_layer_1/collision_layer = 3
 physics_layer_1/collision_mask = 3
-sources/2 = SubResource("TileSetAtlasSource_qk1ka")
+sources/2 = SubResource("TileSetAtlasSource_v0hs2")
 
 [sub_resource type="Gradient" id="Gradient_r2i1d"]
 offsets = PackedFloat32Array(0, 0.55932206, 1)
@@ -70,7 +70,7 @@ fractal_gain = 0.1
 domain_warp_enabled = true
 domain_warp_amplitude = 50.0
 
-[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_si0pi"]
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_ns8y8"]
 width = 800
 height = 800
 noise = SubResource("FastNoiseLite_oryae")
@@ -82,7 +82,7 @@ seed = 10
 frequency = 0.0015
 fractal_type = 2
 
-[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_lpy5r"]
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_c56d2"]
 width = 800
 height = 800
 generate_mipmaps = false
@@ -90,8 +90,8 @@ noise = SubResource("FastNoiseLite_pxxkn")
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_m8eru"]
 shader = ExtResource("6_gaj3i")
-shader_parameter/noise_texture = SubResource("NoiseTexture2D_si0pi")
-shader_parameter/noise_texture2 = SubResource("NoiseTexture2D_lpy5r")
+shader_parameter/noise_texture = SubResource("NoiseTexture2D_ns8y8")
+shader_parameter/noise_texture2 = SubResource("NoiseTexture2D_c56d2")
 shader_parameter/smoke_color = Color(0.043534786, 0.043534786, 0.043534786, 1)
 shader_parameter/distortion_speed = 0.010000000475
 shader_parameter/density = 1.0
@@ -243,4 +243,4 @@ EnemyType = "Bishop"
 [node name="Note" parent="." instance=ExtResource("9_v0hs2")]
 position = Vector2(1711, 410)
 metadata/Title = "Office Note"
-metadata/Contents = "Management has us working overtime for some reason. Apparently the someone from up top really wants the P.A.W.N. Project done soon and has been threatening cut our bonuses if its not finished by the end of the month."
+metadata/Contents = "Management has us working overtime for some reason. Apparently someone from up top really wants the P.A.W.N. Project done soon and has been threatening cut our bonuses if its not finished by the end of the month."

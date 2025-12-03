@@ -31,6 +31,7 @@ var SpecialRange = 50
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 
 var WalkReady = true
+var OnScreen = false
 
 func CheckTypeStats():
 	ShootType = Globals.PlayerTypes[EnemyType][0]
@@ -145,7 +146,7 @@ func _physics_process(_delta):
 			look_at(Vector2(Target.x,Target.y)) # Looks at target
 			velocity = SPEED * Vector2(cos(rotation),sin(rotation)) # Applies velocity forwards
 			$AnimationPlayer.play("Walking")
-			if WalkReady:
+			if WalkReady and OnScreen:
 				var NewSFX = SFX.instantiate()
 				NewSFX.stream = load("res://SFX/RobotFootstep2.mp3")
 				NewSFX.position = position
@@ -155,7 +156,7 @@ func _physics_process(_delta):
 		if Movement == "Targeted":
 			look_at(Vector2(Target.position.x,Target.position.y)) # Looks at target
 			$AnimationPlayer.play("Walking")
-			if WalkReady:
+			if WalkReady and OnScreen:
 				var NewSFX = SFX.instantiate()
 				NewSFX.stream = load("res://SFX/RobotFootstep2.mp3")
 				NewSFX.position = position
@@ -368,3 +369,11 @@ func PlasmaBurst():
 
 func _on_walk_timer_timeout() -> void:
 	WalkReady = true
+
+
+func _on_visible_on_screen_notifier_2d_screen_entered() -> void:
+	OnScreen = true
+
+
+func _on_visible_on_screen_notifier_2d_screen_exited() -> void:
+	OnScreen = false

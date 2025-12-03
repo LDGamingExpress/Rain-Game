@@ -29,16 +29,25 @@ func _on_exit_pressed() -> void:
 
 
 func _on_tutorial_pressed() -> void:
+	Globals.CurrentMap = 0
 	get_tree().change_scene_to_file("res://Tutorial.tscn")
 
 
 func _on_map_1_pressed() -> void:
+	Globals.CurrentMap = 1
 	get_tree().change_scene_to_file("res://Map1.tscn")
 
 
 func _on_map_2_pressed() -> void:
+	Globals.CurrentMap = 2
 	get_tree().change_scene_to_file("res://Map2.tscn")
 
 
 func _on_map_3_pressed() -> void:
+	Globals.CurrentMap = 3
 	get_tree().change_scene_to_file("res://Map3.tscn")
+
+
+func _on_map_4_pressed() -> void:
+	Globals.CurrentMap = 4
+	get_tree().change_scene_to_file("res://Map4.tscn")

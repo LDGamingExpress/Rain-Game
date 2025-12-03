@@ -10,8 +10,8 @@ var PlayerTypes = {
 	"Knight": ["Laser","Dash",Color(5.51, 5.158, 0.0, 0.839),3,5,130.0,[Vector2(8.0,-11.5),Vector2(8.0,11.5)]],
 	"Rook": ["Plasma","Plasma Burst",Color(5.51, 5.158, 0.0, 0.839),4,12,105.0,[Vector2(10.0,0.0)]]
 }
-var Maps = ["res://Tutorial.tscn","res://Map1.tscn","res://Map2.tscn","res://Map3.tscn"];
-var MapNames = ["Tutorial","Outlying Outpost","Island Base","Offshore Lair"]
+var Maps = ["res://Tutorial.tscn","res://Map1.tscn","res://Map2.tscn","res://Map3.tscn","res://Map4.tscn"];
+var MapNames = ["Tutorial","Outlying Outpost","Island Base","Offshore Lair","Stronghold"]
 var CurrentMap = 0
 var MapWon = false
 var CurrentPlayerType = "Plant"
