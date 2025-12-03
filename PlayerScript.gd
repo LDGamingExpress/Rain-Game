@@ -48,7 +48,7 @@ func CheckTypeStats():
 			Damage = 1.0
 		"Laser":
 			Firerate = 0.5
-			Damage = 0.5
+			Damage = 1.0
 		"Plasma":
 			Firerate = 2.5
 			Damage = 5.0
@@ -263,6 +263,10 @@ func PrepNextSpecial(): # Prepares to fire after last shot
 func TakeDamage(DamageTaken): # Handles damage from hostiles
 	Health -= DamageTaken # Subtracts damage from health
 	$BloodParticles.restart() # Activates blood particles
+	var NewSFX = SFX.instantiate()
+	NewSFX.stream = load("res://SFX/PlantDestroyed.mp3")
+	NewSFX.position = position
+	get_parent().call_deferred("add_child",NewSFX)
 	if Health <= 0: # Checks if the health is 0 or less
 		if Globals.CurrentPlayerType != "Plant":
 			Globals.CurrentPlayerType = "Plant"
@@ -304,6 +308,10 @@ func _on_take_over_area_body_entered(body: Node2D) -> void:
 		RainMachine = body
 		body.get_child(3).visible = true
 	if body.is_in_group("PlantMatter"):
+		var NewSFX = SFX.instantiate()
+		NewSFX.stream = load("res://SFX/PlantMaterialPickup.mp3")
+		NewSFX.position = position
+		get_parent().call_deferred("add_child",NewSFX)
 		var NewObj = load("res://ImpactParticles.tscn").instantiate()
 		NewObj.position = body.position
 		NewObj.self_modulate = Color(0.0, 0.672, 0.0, 1.0)
@@ -332,6 +340,14 @@ func ElectricPulse():
 	$SpecialAnimationPlayer.play("Electric Pulse")
 	await get_tree().create_timer(2.5).timeout
 	if Globals.CurrentPlayerType != "Plant":
+		var NewSFX = SFX.instantiate()
+		NewSFX.stream = load("res://SFX/Explosion1.mp3")
+		NewSFX.position = position
+		get_parent().call_deferred("add_child",NewSFX)
+		var NewSFX2 = SFX.instantiate()
+		NewSFX2.stream = load("res://SFX/LaserSFX2.mp3")
+		NewSFX2.position = position
+		get_parent().call_deferred("add_child",NewSFX2)
 		for i in range(0,15):
 			var NewBul = BulletObj.instantiate() # Instantiates/Creates bullet object
 			NewBul.position = global_position # Sets bullet to gun position
@@ -355,6 +371,14 @@ func PlasmaBurst():
 	$SpecialAnimationPlayer.play("Electric Pulse")
 	await get_tree().create_timer(2.5).timeout
 	if Globals.CurrentPlayerType != "Plant":
+		var NewSFX = SFX.instantiate()
+		NewSFX.stream = load("res://SFX/Explosion1.mp3")
+		NewSFX.position = position
+		get_parent().call_deferred("add_child",NewSFX)
+		var NewSFX2 = SFX.instantiate()
+		NewSFX2.stream = load("res://SFX/PlasmaShootSoundEffect.mp3")
+		NewSFX2.position = position
+		get_parent().call_deferred("add_child",NewSFX2)
 		for i in range(0,25):
 			var NewBul = BulletObj.instantiate() # Instantiates/Creates bullet object
 			NewBul.position = global_position # Sets bullet to gun position

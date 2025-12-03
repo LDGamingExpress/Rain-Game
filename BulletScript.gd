@@ -3,6 +3,7 @@ var Team = null # Group the bullet comes from, set when created
 var Damage = 1 # Damage the bullet does, set when created
 var ImpactP = load("res://ImpactParticles.tscn")
 var Explosion = preload("res://Explosion.tscn")
+@onready var SFX := preload("res://SFXObject.tscn")
 var TimeRange = 2.0
 var Frame = 0
 
@@ -39,7 +40,15 @@ func _on_hit_area_body_entered(body): # Activated when the bullet hits an object
 		NewObj.self_modulate = Color(0.982, 0.423, 0.0, 1.0)
 		get_parent().add_child(NewObj)
 		body.queue_free()
+		var NewSFX = SFX.instantiate()
+		NewSFX.stream = load("res://SFX/CrateDestroyed.mp3")
+		NewSFX.position = position
+		get_parent().call_deferred("add_child",NewSFX)
 	if body.is_in_group("PlantCrate"):
+		var NewSFX = SFX.instantiate()
+		NewSFX.stream = load("res://SFX/CrateDestroyed.mp3")
+		NewSFX.position = position
+		get_parent().call_deferred("add_child",NewSFX)
 		var NewObj = ImpactP.instantiate()
 		NewObj.position = body.position
 		NewObj.self_modulate = Color(0.982, 0.423, 0.0, 1.0)

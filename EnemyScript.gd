@@ -3,6 +3,7 @@ extends CharacterBody2D
 @onready var CorpseObj := preload("res://Corpse.tscn") # Corpse object to be spawned
 @onready var MeleeObj := preload("res://MeleeNode.tscn")
 @onready var ExplosionObj := preload("res://Explosion.tscn")
+@onready var SFX := preload("res://SFXObject.tscn")
 
 var HostilesFound = [] # Array to contain nodes of hostiles to attack within range
 var SPEED = 100.0 # Speed of the enemy
@@ -29,6 +30,8 @@ var SpecialRange = 50
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 
+var WalkReady = true
+
 func CheckTypeStats():
 	ShootType = Globals.PlayerTypes[EnemyType][0]
 	SpecialType = Globals.PlayerTypes[EnemyType][1]
@@ -51,7 +54,7 @@ func CheckTypeStats():
 			AttackRange = 350
 		"Laser":
 			Firerate = 0.5
-			Damage = 0.5
+			Damage = 1.0
 			AttackRange = 400
 		"Plasma":
 			Firerate = 2.5
@@ -142,9 +145,23 @@ func _physics_process(_delta):
 			look_at(Vector2(Target.x,Target.y)) # Looks at target
 			velocity = SPEED * Vector2(cos(rotation),sin(rotation)) # Applies velocity forwards
 			$AnimationPlayer.play("Walking")
+			if WalkReady:
+				var NewSFX = SFX.instantiate()
+				NewSFX.stream = load("res://SFX/RobotFootstep2.mp3")
+				NewSFX.position = position
+				get_parent().call_deferred("add_child",NewSFX)
+				WalkReady = false
+				$WalkTimer.start()
 		if Movement == "Targeted":
 			look_at(Vector2(Target.position.x,Target.position.y)) # Looks at target
 			$AnimationPlayer.play("Walking")
+			if WalkReady:
+				var NewSFX = SFX.instantiate()
+				NewSFX.stream = load("res://SFX/RobotFootstep2.mp3")
+				NewSFX.position = position
+				get_parent().call_deferred("add_child",NewSFX)
+				WalkReady = false
+				$WalkTimer.start()
 			velocity = SPEED * Vector2(cos(rotation),sin(rotation)) # Applies velocity forwards
 		if Movement == "Shooting":
 			if !is_instance_valid(Target): # Checks if target no longer exists
@@ -181,6 +198,10 @@ func _physics_process(_delta):
 						NewBul.Damage = Damage # Gives bullet enemy's damage
 						NewBul.Frame = 0
 						get_parent().add_child(NewBul) # Creates bullet as child of parent
+						var NewSFX = SFX.instantiate()
+						NewSFX.stream = load("res://SFX/NeedleSoundEffect.mp3")
+						NewSFX.position = position
+						get_parent().call_deferred("add_child",NewSFX)
 					"Melee":
 						var NewObj = MeleeObj.instantiate()
 						NewObj.position = Vector2(7,0)
@@ -188,6 +209,10 @@ func _physics_process(_delta):
 						NewObj.Damage = Damage
 						add_child(NewObj)
 						PrepNextFire() # Gun is prepared to fire again
+						var NewSFX = SFX.instantiate()
+						NewSFX.stream = load("res://SFX/Melee1.mp3")
+						NewSFX.position = position
+						get_parent().call_deferred("add_child",NewSFX)
 					"Bolt":
 						$GunParticles.restart() # Particles are activated
 						PrepNextFire() # Gun is prepared to fire again
@@ -198,6 +223,10 @@ func _physics_process(_delta):
 						NewBul.Damage = Damage # Gives bullet enemy's damage
 						NewBul.Frame = 1
 						get_parent().add_child(NewBul) # Creates bullet as child of parent
+						var NewSFX = SFX.instantiate()
+						NewSFX.stream = load("res://SFX/LaserSFX2.mp3")
+						NewSFX.position = position
+						get_parent().call_deferred("add_child",NewSFX)
 					"Laser":
 						$GunParticles.restart() # Particles are activated
 						PrepNextFire() # Gun is prepared to fire again
@@ -217,6 +246,10 @@ func _physics_process(_delta):
 						NewBul2.Damage = Damage # Gives bullet enemy's damage
 						NewBul2.Frame = 2
 						get_parent().add_child(NewBul2) # Creates bullet as child of parent
+						var NewSFX = SFX.instantiate()
+						NewSFX.stream = load("res://SFX/LaserSoundEffect.mp3")
+						NewSFX.position = position
+						get_parent().call_deferred("add_child",NewSFX)
 					"Plasma":
 						$GunParticles.restart() # Particles are activated
 						PrepNextFire() # Gun is prepared to fire again
@@ -227,6 +260,10 @@ func _physics_process(_delta):
 						NewBul.Damage = Damage # Gives bullet enemy's damage
 						NewBul.Frame = 3
 						get_parent().add_child(NewBul) # Creates bullet as child of parent
+						var NewSFX = SFX.instantiate()
+						NewSFX.stream = load("res://SFX/PlasmaShootSoundEffect.mp3")
+						NewSFX.position = position
+						get_parent().call_deferred("add_child",NewSFX)
 			else:
 				look_at(Vector2(Target.position.x,Target.position.y)) # Looks at target
 		LastPos = position
@@ -246,6 +283,10 @@ func TakeDamage(DamageTaken): # Handles damage from hostiles
 	Health -= DamageTaken # Subtracts damage from health
 	$BloodParticles.restart() # Activates blood particles
 	if Health <= 0: # Checks if the health is 0 or less
+		var NewSFX = SFX.instantiate()
+		NewSFX.stream = load("res://SFX/ChunkyExplosion.mp3")
+		NewSFX.position = position
+		get_parent().call_deferred("add_child",NewSFX)
 		$AnimatedSprite2D.visible = false
 		await get_tree().create_timer(0.4).timeout # Gives 1 second for particles to finish
 		var NewC = CorpseObj.instantiate() # Instantiates/Creates corpse object
@@ -279,6 +320,14 @@ func ElectricPulse():
 	$EffectParticles.self_modulate = Color(4.455, 4.455, 0.0, 0.278)
 	$SpecialAnimationPlayer.play("Electric Pulse")
 	await get_tree().create_timer(2.5).timeout
+	var NewSFX = SFX.instantiate()
+	NewSFX.stream = load("res://SFX/Explosion1.mp3")
+	NewSFX.position = position
+	get_parent().call_deferred("add_child",NewSFX)
+	var NewSFX2 = SFX.instantiate()
+	NewSFX2.stream = load("res://SFX/LaserSFX2.mp3")
+	NewSFX2.position = position
+	get_parent().call_deferred("add_child",NewSFX2)
 	for i in range(0,15):
 		var NewBul = BulletObj.instantiate() # Instantiates/Creates bullet object
 		NewBul.position = global_position # Sets bullet to gun position
@@ -299,6 +348,14 @@ func PlasmaBurst():
 	$EffectParticles.self_modulate = Color(2.253, 0.0, 1.966, 0.278)
 	$SpecialAnimationPlayer.play("Electric Pulse")
 	await get_tree().create_timer(2.5).timeout
+	var NewSFX = SFX.instantiate()
+	NewSFX.stream = load("res://SFX/Explosion1.mp3")
+	NewSFX.position = position
+	get_parent().call_deferred("add_child",NewSFX)
+	var NewSFX2 = SFX.instantiate()
+	NewSFX2.stream = load("res://SFX/PlasmaShootSoundEffect.mp3")
+	NewSFX2.position = position
+	get_parent().call_deferred("add_child",NewSFX2)
 	for i in range(0,25):
 		var NewBul = BulletObj.instantiate() # Instantiates/Creates bullet object
 		NewBul.position = global_position # Sets bullet to gun position
@@ -307,3 +364,7 @@ func PlasmaBurst():
 		NewBul.Damage = Damage # Gives bullet enemy's damage
 		NewBul.Frame = 3
 		get_parent().add_child(NewBul) # Creates bullet as child of parent
+
+
+func _on_walk_timer_timeout() -> void:
+	WalkReady = true
