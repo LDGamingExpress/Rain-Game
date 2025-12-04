@@ -3,6 +3,7 @@ extends Control
 var Music = [preload("res://Music/Cyber City Scramble.mp3"),preload("res://Music/Dark Future.mp3")]
 
 func _ready() -> void:
+	Globals.MapWon = false
 	MusicPlayer()
 
 func MusicPlayer():

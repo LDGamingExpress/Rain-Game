@@ -49,6 +49,7 @@ func CheckTypeStats():
 			Firerate = 0.5
 			Damage = 0.5
 			AttackRange = 30
+			$RayCast2D.queue_free()
 		"Bolt":
 			Firerate = 0.75
 			Damage = 1.0
@@ -61,6 +62,7 @@ func CheckTypeStats():
 			Firerate = 2.5
 			Damage = 5.0
 			AttackRange = 200
+			$RayCast2D.queue_free()
 	match SpecialType:
 		"Take Over":
 			Specialrate = 1.0
@@ -215,42 +217,44 @@ func _physics_process(_delta):
 						NewSFX.position = position
 						get_parent().call_deferred("add_child",NewSFX)
 					"Bolt":
-						$GunParticles.restart() # Particles are activated
-						PrepNextFire() # Gun is prepared to fire again
-						var NewBul = BulletObj.instantiate() # Instantiates/Creates bullet object
-						NewBul.position = $GunParticles.global_position # Sets bullet to gun position
-						NewBul.rotation = rotation # Rotates bullet to match rotation
-						NewBul.Team = "Enemies" # Sets team to match group
-						NewBul.Damage = Damage # Gives bullet enemy's damage
-						NewBul.Frame = 1
-						get_parent().add_child(NewBul) # Creates bullet as child of parent
-						var NewSFX = SFX.instantiate()
-						NewSFX.stream = load("res://SFX/LaserSFX2.mp3")
-						NewSFX.position = position
-						get_parent().call_deferred("add_child",NewSFX)
+						if !$RayCast2D.is_colliding():
+							$GunParticles.restart() # Particles are activated
+							PrepNextFire() # Gun is prepared to fire again
+							var NewBul = BulletObj.instantiate() # Instantiates/Creates bullet object
+							NewBul.position = $GunParticles.global_position # Sets bullet to gun position
+							NewBul.rotation = rotation # Rotates bullet to match rotation
+							NewBul.Team = "Enemies" # Sets team to match group
+							NewBul.Damage = Damage # Gives bullet enemy's damage
+							NewBul.Frame = 1
+							get_parent().add_child(NewBul) # Creates bullet as child of parent
+							var NewSFX = SFX.instantiate()
+							NewSFX.stream = load("res://SFX/LaserSFX2.mp3")
+							NewSFX.position = position
+							get_parent().call_deferred("add_child",NewSFX)
 					"Laser":
-						$GunParticles.restart() # Particles are activated
-						PrepNextFire() # Gun is prepared to fire again
-						var NewBul = BulletObj.instantiate() # Instantiates/Creates bullet object
-						NewBul.position = $GunParticles.global_position # Sets bullet to gun position
-						NewBul.rotation = rotation # Rotates bullet to match rotation
-						NewBul.Team = "Enemies" # Sets team to match group
-						NewBul.Damage = Damage # Gives bullet enemy's damage
-						NewBul.Frame = 2
-						get_parent().add_child(NewBul) # Creates bullet as child of parent
-						$GunParticles2.restart() # Particles are activated
-						PrepNextFire() # Gun is prepared to fire again
-						var NewBul2 = BulletObj.instantiate() # Instantiates/Creates bullet object
-						NewBul2.position = $GunParticles2.global_position # Sets bullet to gun position
-						NewBul2.rotation = rotation # Rotates bullet to match rotation
-						NewBul2.Team = "Enemies" # Sets team to match group
-						NewBul2.Damage = Damage # Gives bullet enemy's damage
-						NewBul2.Frame = 2
-						get_parent().add_child(NewBul2) # Creates bullet as child of parent
-						var NewSFX = SFX.instantiate()
-						NewSFX.stream = load("res://SFX/LaserSoundEffect.mp3")
-						NewSFX.position = position
-						get_parent().call_deferred("add_child",NewSFX)
+						if !$RayCast2D.is_colliding():
+							$GunParticles.restart() # Particles are activated
+							PrepNextFire() # Gun is prepared to fire again
+							var NewBul = BulletObj.instantiate() # Instantiates/Creates bullet object
+							NewBul.position = $GunParticles.global_position # Sets bullet to gun position
+							NewBul.rotation = rotation # Rotates bullet to match rotation
+							NewBul.Team = "Enemies" # Sets team to match group
+							NewBul.Damage = Damage # Gives bullet enemy's damage
+							NewBul.Frame = 2
+							get_parent().add_child(NewBul) # Creates bullet as child of parent
+							$GunParticles2.restart() # Particles are activated
+							PrepNextFire() # Gun is prepared to fire again
+							var NewBul2 = BulletObj.instantiate() # Instantiates/Creates bullet object
+							NewBul2.position = $GunParticles2.global_position # Sets bullet to gun position
+							NewBul2.rotation = rotation # Rotates bullet to match rotation
+							NewBul2.Team = "Enemies" # Sets team to match group
+							NewBul2.Damage = Damage # Gives bullet enemy's damage
+							NewBul2.Frame = 2
+							get_parent().add_child(NewBul2) # Creates bullet as child of parent
+							var NewSFX = SFX.instantiate()
+							NewSFX.stream = load("res://SFX/LaserSoundEffect.mp3")
+							NewSFX.position = position
+							get_parent().call_deferred("add_child",NewSFX)
 					"Plasma":
 						$GunParticles.restart() # Particles are activated
 						PrepNextFire() # Gun is prepared to fire again

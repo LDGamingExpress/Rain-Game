@@ -344,6 +344,7 @@ mesh = SubResource("SphereMesh_qp131")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_rvmyp")
+frame = 1
 
 [node name="EnemyCollider" type="CollisionShape2D" parent="."]
 visible = false
@@ -409,6 +410,10 @@ wait_time = 0.4
 one_shot = true
 
 [node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+
+[node name="RayCast2D" type="RayCast2D" parent="."]
+target_position = Vector2(17, 0)
+collision_mask = 2
 
 [connection signal="body_entered" from="DetectionArea" to="." method="_on_detection_area_body_entered"]
 [connection signal="body_exited" from="DetectionArea" to="." method="_on_detection_area_body_exited"]

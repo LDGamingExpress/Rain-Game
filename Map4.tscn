@@ -170,7 +170,7 @@ tile_map_data = PackedByteArray("AABRAOP/AAAHAAQAAABRAOT/AAAHAAQAAABSAOX/AAAHAAQ
 tile_set = ExtResource("3_4uli2")
 
 [node name="EntityLayer" type="TileMapLayer" parent="."]
-tile_map_data = PackedByteArray("AAAgAPf/AAAAAAAAAgAgAPb/AAAAAAAAAgAgAPX/AAAAAAAAAgAOAPX/AAAAAAAAAgAaAPn/AAAAAAAAAgAbAPn/AAAAAAAAAgApAAMAAAAAAAAAAwBSACEAAAAAAAAAAwBQAAUAAAAAAAAAAwBMAPn/AAAAAAAAAwBQAPf/AAAAAAAAAgBRAPf/AAAAAAAAAgBAAPz/AAAAAAAAAgBAAPv/AAAAAAAAAgBAAPr/AAAAAAAAAgBSAAcAAAAAAAAAAgBRAAcAAAAAAAAAAgAtAAYAAAAAAAAAAgAsAAYAAAAAAAAAAgAkAAYAAAAAAAAAAgAlAAYAAAAAAAAAAgAnAAYAAAAAAAAAAgAgAAYAAAAAAAAAAgAfAAYAAAAAAAAAAgAkAAMAAAAAAAAAAgAjAAMAAAAAAAAAAgCdAOT/AAAAAAAAAQBQACEAAAAAAAAAAwA=")
+tile_map_data = PackedByteArray("AAAgAPf/AAAAAAAAAgAgAPb/AAAAAAAAAgAgAPX/AAAAAAAAAgAOAPX/AAAAAAAAAgAaAPn/AAAAAAAAAgAbAPn/AAAAAAAAAgApAAMAAAAAAAAAAwBSACEAAAAAAAAAAwBQAAUAAAAAAAAAAwBMAPn/AAAAAAAAAwBQAPf/AAAAAAAAAgBRAPf/AAAAAAAAAgBAAPz/AAAAAAAAAgBAAPv/AAAAAAAAAgBAAPr/AAAAAAAAAgBSAAcAAAAAAAAAAgBRAAcAAAAAAAAAAgAtAAYAAAAAAAAAAgAsAAYAAAAAAAAAAgAkAAYAAAAAAAAAAgAlAAYAAAAAAAAAAgAnAAYAAAAAAAAAAgAgAAYAAAAAAAAAAgAfAAYAAAAAAAAAAgAkAAMAAAAAAAAAAgAjAAMAAAAAAAAAAgCdAOT/AAAAAAAAAQBQACEAAAAAAAAAAwCDACwAAAAAAAAAAwB9ACcAAAAAAAAAAgB9ACYAAAAAAAAAAgB+ACYAAAAAAAAAAgCFACcAAAAAAAAAAgCFACgAAAAAAAAAAgB+AC4AAAAAAAAAAgB9AC4AAAAAAAAAAgA=")
 tile_set = ExtResource("4_dtlvu")
 
 [node name="ColorRect" type="ColorRect" parent="."]
@@ -224,7 +224,7 @@ SpawnNumber = 2
 
 [node name="Spawner6" parent="." instance=ExtResource("6_4uli2")]
 position = Vector2(2342, 497)
-EnemyType = "Bishop"
+EnemyType = "Knight"
 WaitTime = 50.0
 
 [node name="Enemy" parent="." instance=ExtResource("7_dtlvu")]
@@ -251,7 +251,7 @@ EnemyType = "Knight"
 position = Vector2(1972, 424)
 
 [node name="Enemy8" parent="." instance=ExtResource("7_dtlvu")]
-position = Vector2(2290, 95)
+position = Vector2(2457, 81)
 EnemyType = "Bishop"
 
 [node name="Enemy9" parent="." instance=ExtResource("7_dtlvu")]
@@ -262,7 +262,7 @@ EnemyType = "Bishop"
 position = Vector2(2240, 182)
 
 [node name="Enemy11" parent="." instance=ExtResource("7_dtlvu")]
-position = Vector2(2164, -293)
+position = Vector2(2243, -285)
 
 [node name="Enemy12" parent="." instance=ExtResource("7_dtlvu")]
 position = Vector2(2237, -125)
@@ -272,14 +272,14 @@ position = Vector2(2495, -164)
 EnemyType = "Knight"
 
 [node name="Enemy14" parent="." instance=ExtResource("7_dtlvu")]
-position = Vector2(2319, 733)
+position = Vector2(2397, 761)
 
 [node name="Enemy15" parent="." instance=ExtResource("7_dtlvu")]
 position = Vector2(2388, 1067)
 EnemyType = "Bishop"
 
 [node name="Enemy16" parent="." instance=ExtResource("7_dtlvu")]
-position = Vector2(2608, 813)
+position = Vector2(2709, 749)
 EnemyType = "Knight"
 
 [node name="Enemy17" parent="." instance=ExtResource("7_dtlvu")]
@@ -333,10 +333,8 @@ position = Vector2(3563, -256)
 position = Vector2(3004, 280)
 
 [node name="Enemy31" parent="." instance=ExtResource("7_dtlvu")]
-position = Vector2(4225, 834)
-
-[node name="Enemy32" parent="." instance=ExtResource("7_dtlvu")]
-position = Vector2(3044, 1336)
+position = Vector2(4151, 1327)
+EnemyType = "Rook"
 
 [node name="Enemy33" parent="." instance=ExtResource("7_dtlvu")]
 position = Vector2(1868, 942)
@@ -347,12 +345,8 @@ position = Vector2(1089, -159)
 [node name="Enemy35" parent="." instance=ExtResource("7_dtlvu")]
 position = Vector2(1834, -45)
 
-[node name="Enemy36" parent="." instance=ExtResource("7_dtlvu")]
-position = Vector2(4145, 278)
-
 [node name="Enemy37" parent="." instance=ExtResource("7_dtlvu")]
 position = Vector2(3452, 502)
-EnemyType = "Bishop"
 
 [node name="Enemy38" parent="." instance=ExtResource("7_dtlvu")]
 position = Vector2(4589, 398)
@@ -362,14 +356,6 @@ EnemyType = "Bishop"
 position = Vector2(1670, -450)
 EnemyType = "Bishop"
 
-[node name="Enemy40" parent="." instance=ExtResource("7_dtlvu")]
-position = Vector2(1384, -734)
-EnemyType = "Bishop"
-
 [node name="Enemy41" parent="." instance=ExtResource("7_dtlvu")]
 position = Vector2(2606, -444)
-EnemyType = "Knight"
-
-[node name="Enemy42" parent="." instance=ExtResource("7_dtlvu")]
-position = Vector2(3627, 1089)
 EnemyType = "Knight"
