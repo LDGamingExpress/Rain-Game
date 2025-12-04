@@ -374,6 +374,7 @@ process_material = SubResource("ParticleProcessMaterial_3sc0p")
 
 [node name="DetectionArea" type="Area2D" parent="."]
 visible = false
+collision_layer = 0
 
 [node name="DetectionCollider" type="CollisionShape2D" parent="DetectionArea"]
 shape = SubResource("CircleShape2D_1stxh")

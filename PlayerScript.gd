@@ -290,7 +290,7 @@ func TakeOver():
 
 func SelfDestruct():
 	$SpecialAnimationPlayer.play("Self Destruct")
-	await get_tree().create_timer(1.0).timeout
+	await get_tree().create_timer(1.0 / pow(PlantBonus,2)).timeout
 	if Globals.CurrentPlayerType != "Plant":
 		var NewObj = ExplosionObj.instantiate()
 		NewObj.position = global_position
@@ -338,7 +338,7 @@ func _on_take_over_area_body_exited(body: Node2D) -> void:
 func ElectricPulse():
 	$EffectParticles.self_modulate = Color(4.455, 4.455, 0.0, 0.278)
 	$SpecialAnimationPlayer.play("Electric Pulse")
-	await get_tree().create_timer(2.5).timeout
+	await get_tree().create_timer(2.5 / pow(PlantBonus,2)).timeout
 	if Globals.CurrentPlayerType != "Plant":
 		var NewSFX = SFX.instantiate()
 		NewSFX.stream = load("res://SFX/Explosion1.mp3")
@@ -359,7 +359,7 @@ func ElectricPulse():
 
 func Dash():
 	$SpecialAnimationPlayer.play("DashReady")
-	await get_tree().create_timer(1.0).timeout
+	await get_tree().create_timer(1.0 / pow(PlantBonus,2)).timeout
 	if Globals.CurrentPlayerType != "Plant":
 		$EffectParticles.self_modulate = Color(1.543, 1.543, 1.53, 0.278)
 		$SpecialAnimationPlayer.play("DashNow")
@@ -369,7 +369,7 @@ func Dash():
 func PlasmaBurst():
 	$EffectParticles.self_modulate = Color(2.253, 0.0, 1.966, 0.278)
 	$SpecialAnimationPlayer.play("Electric Pulse")
-	await get_tree().create_timer(2.5).timeout
+	await get_tree().create_timer(2.5 / pow(PlantBonus,2)).timeout
 	if Globals.CurrentPlayerType != "Plant":
 		var NewSFX = SFX.instantiate()
 		NewSFX.stream = load("res://SFX/Explosion1.mp3")

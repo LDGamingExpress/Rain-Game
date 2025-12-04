@@ -285,7 +285,19 @@ offset_right = 2190.0
 offset_bottom = 320.0
 text = "<--- Goal"
 
+[node name="Label7" type="Label" parent="TutorialText"]
+layout_mode = 0
+offset_left = 1284.0
+offset_top = 353.0
+offset_right = 1417.0
+offset_bottom = 389.0
+text = "<--- Power-Up
+         Crate"
+
 [node name="Note" parent="." instance=ExtResource("10_swigd")]
 position = Vector2(-954, 443)
 metadata/Title = "Note"
 metadata/Contents = "Found a few plants that were still kicking somehow. I'll try to round up the boys so we can ship them off to HQ for disposal. Might get us a few water rations a piece."
+
+[node name="Enemy4" parent="." instance=ExtResource("6_swigd")]
+position = Vector2(2054, -168)
